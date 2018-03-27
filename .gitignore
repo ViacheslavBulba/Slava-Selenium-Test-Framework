@@ -35,3 +35,8 @@ hs_err_pid*
 /.checkstyle
 .classpath
 .project
+.idea/
+
+target/
+logs/log.html
+*log.html
