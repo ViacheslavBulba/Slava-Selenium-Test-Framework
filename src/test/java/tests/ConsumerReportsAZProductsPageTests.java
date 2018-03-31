@@ -38,10 +38,13 @@ public class ConsumerReportsAZProductsPageTests extends BrowserTestSuite {
     @Test(description = "Check that links on the A-Z page open appropriate pages",
         dataProvider = "allLinkTitlesOnAzPage")
     public void checkAllLinksWork(String linkTitle) throws Exception {
+        if (linkTitle.equals("Airline travel")) {
+            assertFalse(true);
+        }
         String linkSingular = linkTitle.endsWith("s") ? linkTitle.substring(0, linkTitle.length() - 1) : linkTitle;
         ConsumerReportsAZProductsPage azPage = new ConsumerReportsAZProductsPage();
         assertFalse(EMPTY_LIST_MESSAGE.equals(linkTitle), EMPTY_LIST_MESSAGE);
-        ConsumerReportsProductPage productPage = azPage.clickLink(linkTitle);
+        ConsumerReportsProductPage productPage = azPage.clickOnProductLink(linkTitle);
         if (linkSingular.equals("Home window")) {
             linkSingular = "Replacement Windows";
         }

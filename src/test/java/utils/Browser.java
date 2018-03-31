@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Browser {
 
-    private static final int IMPLICITLY_WAIT_SECONDS = 10;
+    public static final int IMPLICITLY_WAIT_SECONDS = 10;
 
     protected WebDriver driver;
     private String fileSeparator = System.getProperty("file.separator");
@@ -102,7 +102,7 @@ public class Browser {
             }
             return filePath;
         } catch (IOException e) {
-            System.out.println("ERROR WHILE TAKING A SCREENSHOT: " + e.getMessage());
+            Logger.fail("ERROR WHILE TAKING A SCREENSHOT: " + e.getMessage());
             return e.getMessage();
         }
     }
@@ -129,7 +129,7 @@ public class Browser {
             }
             return filePath;
         } catch (IOException e) {
-            System.out.println("ERROR WHILE TAKING A PAGE SOURCE: " + e.getMessage());
+            Logger.fail("ERROR WHILE TAKING A PAGE SOURCE: " + e.getMessage());
             return e.getMessage();
         }
     }

@@ -42,7 +42,7 @@ public class TestListener implements ITestListener{
     try{
       ReportHolder.getReport().fail(iTestResult.getThrowable(), MediaEntityBuilder.createScreenCaptureFromPath(BrowserHolder.getBrowser().getScreenshot(fileName)).build());
     } catch (IOException e){
-      System.out.println("ERROR WHILE TAKING A SCREENSHOT: " + e.getMessage());
+      Logger.fail("ERROR WHILE TAKING A SCREENSHOT: " + e.getMessage());
     }
     BrowserHolder.getBrowser().getPageSource(fileName);
   }

@@ -9,8 +9,8 @@ public class FileSystem {
 
     private static final String PROPERTIES_FILE = "tests.properties";
 
-    private static String fileSeparator = System.getProperty("file.separator");
-    private static String userDir = System.getProperty("user.dir");
+    public static String fileSeparator = System.getProperty("file.separator");
+    public static String userDir = System.getProperty("user.dir");
 
     public static String getPropertyFromFile(String propertyName) {
         FileInputStream fileInputStream;
@@ -20,7 +20,7 @@ public class FileSystem {
             property.load(fileInputStream);
             return property.getProperty(propertyName);
         } catch (IOException e) {
-            System.err.println("ERROR READING PROPERTIES FILE " + PROPERTIES_FILE);
+            Logger.fail("ERROR READING PROPERTIES FILE " + PROPERTIES_FILE);
             return null;
         }
     }
