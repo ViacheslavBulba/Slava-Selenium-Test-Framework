@@ -25,20 +25,20 @@ public class ConsumerReportsAZProductsPageTests extends BrowserTestSuite {
 
     @DataProvider(parallel = true)
     public Iterator<Object[]> allLinkTitlesOnAzPage() throws IOException {
-        Document doc = Jsoup.connect(FileSystem.getPropertyFromFile("url")).get();
+        Document doc = Jsoup.connect(FileSystem.getPropertyFromConfigFile("url")).get();
         Elements links = doc.select(".products-a-z__results__item");
         if (links.size() < 1) {
             ArrayList<Object[]> emptyList = new ArrayList<>();
             emptyList.add(new Object[]{EMPTY_LIST_MESSAGE});
             return emptyList.iterator();
         }
-        return links.subList(0, 8).stream().map(l -> new Object[]{l.text()}).iterator();
+        return links.subList(0, 2).stream().map(l -> new Object[]{l.text()}).iterator();
     }
 
     @Test(description = "Check that links on the A-Z page open appropriate pages",
         dataProvider = "allLinkTitlesOnAzPage")
     public void checkAllLinksWork(String linkTitle) throws Exception {
-        if (linkTitle.equals("Airline travel")) {
+        if (linkTitle.equals("Air conditioners")) {
             assertFalse(true);
         }
         String linkSingular = linkTitle.endsWith("s") ? linkTitle.substring(0, linkTitle.length() - 1) : linkTitle;

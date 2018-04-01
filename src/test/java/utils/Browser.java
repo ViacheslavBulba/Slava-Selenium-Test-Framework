@@ -1,6 +1,8 @@
 package utils;
 
-import com.aventstack.extentreports.Status;
+import static utils.FileSystem.fileSeparator;
+import static utils.FileSystem.userDir;
+
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.Platform;
@@ -24,8 +26,6 @@ public class Browser {
     public static final int IMPLICITLY_WAIT_SECONDS = 10;
 
     protected WebDriver driver;
-    private String fileSeparator = System.getProperty("file.separator");
-    private String userDir = System.getProperty("user.dir");
     private String url;
     private String seleniumGrid;
 
@@ -49,8 +49,8 @@ public class Browser {
     }
 
     public void setUp() {
-        this.url = FileSystem.getPropertyFromFile("url");
-        this.seleniumGrid = FileSystem.getPropertyFromFile("seleniumGrid");
+        this.url = FileSystem.getPropertyFromConfigFile("url");
+        this.seleniumGrid = FileSystem.getPropertyFromConfigFile("seleniumGrid");
 
         if (seleniumGrid == null) {
             System.setProperty("webdriver.chrome.driver",
@@ -64,14 +64,14 @@ public class Browser {
             try {
                 this.driver = new RemoteWebDriver(new URL(seleniumGrid), capabilities);
             } catch (MalformedURLException e) {
-                ReportHolder.getReport().log(Status.FAIL, "MALFORMED SELENIUM GRID URL");
+                Logger.fail("MALFORMED SELENIUM GRID URL");
                 e.printStackTrace();
             }
         }
     }
 
     public void openHost() {
-        ReportHolder.getReport().log(Status.PASS, "Opening page " + url);
+        Logger.pass("Opening page " + url);
         this.driver.get(url);
         this.driver.manage().window().maximize();
     }

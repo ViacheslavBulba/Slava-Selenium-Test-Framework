@@ -1,5 +1,8 @@
 package utils;
 
+import static utils.FileSystem.fileSeparator;
+import static utils.FileSystem.userDir;
+
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import com.aventstack.extentreports.reporter.configuration.ChartLocation;
@@ -20,8 +23,6 @@ private static ExtentReports extent;
   }
 
   public static ExtentReports createInstance(String reportName) {
-    String fileSeparator = System.getProperty("file.separator");
-    String userDir = System.getProperty("user.dir");
     String folderString = userDir + fileSeparator + "logs";
     File folder = new File(folderString);
     if (!folder.exists()) {
