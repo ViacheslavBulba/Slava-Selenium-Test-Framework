@@ -12,24 +12,7 @@ import java.util.Date;
 public class TestListener implements ITestListener {
 
     public void onTestStart(ITestResult iTestResult) {
-        String testName;
-        String firstPartOfTestName;
-        Object[] parameters = iTestResult.getParameters();
-        if (iTestResult.getMethod().getDescription() == null) {
-            firstPartOfTestName = iTestResult.getName();
-        } else {
-            firstPartOfTestName = iTestResult.getMethod().getDescription();
-        }
-        if (parameters.length == 0) {
-            testName = firstPartOfTestName;
-        } else {
-            StringBuilder builder = new StringBuilder();
-            for (Object parameter : parameters) {
-                builder.append(parameter.toString() + ", ");
-            }
-            testName = firstPartOfTestName + " (" + builder.substring(0, builder.length() - 2) + ")";
-        }
-        ReportHolder.createReport(testName);
+        ReportHolder.createReport(getTestName(iTestResult));
     }
 
     public void onTestSuccess(ITestResult iTestResult) {
@@ -47,7 +30,7 @@ public class TestListener implements ITestListener {
         } catch (IOException e) {
             Logger.fail("ERROR WHILE TAKING A SCREENSHOT: " + e.getMessage());
         }
-        BrowserHolder.getBrowser().getPageSource(fileName);
+        BrowserHolder.getBrowser().getPageSource(getTestName(iTestResult) + getDateAndTime());
     }
 
     public void onTestSkipped(ITestResult iTestResult) {
@@ -67,5 +50,26 @@ public class TestListener implements ITestListener {
         Date dateNow = new Date();
         SimpleDateFormat formatForDateNow = new SimpleDateFormat("_yyyy_MM_dd_hh_mm_ss_SSS");
         return formatForDateNow.format(dateNow);
+    }
+
+    public String getTestName(ITestResult iTestResult) {
+        String testName;
+        String firstPartOfTestName;
+        Object[] parameters = iTestResult.getParameters();
+        if (iTestResult.getMethod().getDescription() == null) {
+            firstPartOfTestName = iTestResult.getName();
+        } else {
+            firstPartOfTestName = iTestResult.getMethod().getDescription();
+        }
+        if (parameters.length == 0) {
+            testName = firstPartOfTestName;
+        } else {
+            StringBuilder builder = new StringBuilder();
+            for (Object parameter : parameters) {
+                builder.append(parameter.toString() + ", ");
+            }
+            testName = firstPartOfTestName + " (" + builder.substring(0, builder.length() - 2) + ")";
+        }
+        return testName;
     }
 }

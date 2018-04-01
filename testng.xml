@@ -3,6 +3,7 @@
 <suite name="Consumer Reports Tests" parallel="methods" thread-count="2" data-provider-thread-count="2">
     <listeners>
         <listener class-name="utils.TestListener" />
+        <listener class-name="utils.SuiteListener" />
     </listeners>
     <test name="test name from testng.xml">
         <classes>
