@@ -32,7 +32,7 @@ public class ConsumerReportsAZProductsPageTests extends BrowserTestSuite {
             emptyList.add(new Object[]{EMPTY_LIST_MESSAGE});
             return emptyList.iterator();
         }
-        return links.subList(0, 2).stream().map(l -> new Object[]{l.text()}).iterator();
+        return links.subList(0, 9).stream().map(l -> new Object[]{l.text()}).iterator();
     }
 
     @Test(description = "Check that links on the A-Z page open appropriate pages",
