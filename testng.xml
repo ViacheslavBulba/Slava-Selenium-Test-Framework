@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Consumer Reports Tests" parallel="methods" thread-count="2" data-provider-thread-count="2">
+<suite name="Consumer Reports Tests" parallel="methods" thread-count="4" data-provider-thread-count="4">
     <listeners>
         <listener class-name="utils.TestListener" />
         <listener class-name="utils.SuiteListener" />
     </listeners>
-    <test name="test name from testng.xml">
+    <test name="tests">
         <classes>
             <class name="tests.ConsumerReportsAZProductsPageTests" />
         </classes>
