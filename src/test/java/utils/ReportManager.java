@@ -9,12 +9,14 @@ import com.aventstack.extentreports.reporter.configuration.ChartLocation;
 import com.aventstack.extentreports.reporter.configuration.Theme;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 public class ReportManager {
 
     private static ExtentReports extent;
-    public static String htmlReportTitle = "Test Run Report";
+    private static String htmlReportTitle = "Test Run Report";
 
     public static void setReportTitle(String reportTitle) {
         htmlReportTitle = reportTitle;
@@ -28,13 +30,15 @@ public class ReportManager {
         return extent;
     }
 
-    public static ExtentReports createInstance(String reportName) {
+    private static ExtentReports createInstance(String reportName) {
         String folderString = userDir + fileSeparator + "logs";
         File folder = new File(folderString);
         if (!folder.exists()) {
             folder.mkdir();
         }
-        String filePath = folderString + fileSeparator + "log.html";
+        Date dateNow = new Date();
+        SimpleDateFormat formatForDateNow = new SimpleDateFormat("EEEEE, MMMMM dd, yyyy, hh-mm a zzzz");
+        String filePath = folderString + fileSeparator + "Test Run on " + formatForDateNow.format(dateNow) + ".html";
         ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(filePath);
         htmlReporter.config().setTestViewChartLocation(ChartLocation.TOP);
         htmlReporter.config().setChartVisibilityOnOpen(true);

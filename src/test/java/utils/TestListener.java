@@ -21,10 +21,20 @@ public class TestListener implements ITestListener {
 
     public void onTestFailure(ITestResult iTestResult) {
         String currentUrl = BrowserHolder.getBrowser().getWebDriver().getCurrentUrl();
-        String currentUrlLink = "<a href=\"" + currentUrl + "\">" + currentUrl + "<a>";
+        String currentUrlLink = "<a href=\"" + currentUrl + "\" target=\"_blank\">" + currentUrl + "<a>";
         String fileName = iTestResult.getName() + getDateAndTime();
         try {
-            ReportHolder.getReport().fail(iTestResult.getThrowable().getMessage() + "<br>" + currentUrlLink + "<br>",
+            String errorMessageToDisplay = iTestResult.getThrowable().getMessage();
+            if (errorMessageToDisplay.contains("(Session info:")){
+                errorMessageToDisplay = errorMessageToDisplay.substring(0,errorMessageToDisplay.indexOf("(Session info:"));
+            }
+            if (errorMessageToDisplay.contains("Build info:")){
+                errorMessageToDisplay = errorMessageToDisplay.substring(0,errorMessageToDisplay.indexOf("Build info:"));
+            }
+            if (errorMessageToDisplay.contains("expected [true] but found [false]")){
+                errorMessageToDisplay = errorMessageToDisplay.substring(0, errorMessageToDisplay.indexOf("expected [true] but found [false]") - 1);
+            }
+            ReportHolder.getReport().fail(errorMessageToDisplay + "<br>" + currentUrlLink + "<br>",
                                           MediaEntityBuilder.createScreenCaptureFromPath(
                                               BrowserHolder.getBrowser().getScreenshot(fileName)).build());
         } catch (IOException e) {
@@ -52,7 +62,7 @@ public class TestListener implements ITestListener {
         return formatForDateNow.format(dateNow);
     }
 
-    public String getTestName(ITestResult iTestResult) {
+    private String getTestName(ITestResult iTestResult) {
         String testName;
         String firstPartOfTestName;
         Object[] parameters = iTestResult.getParameters();
