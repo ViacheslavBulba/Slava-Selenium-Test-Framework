@@ -48,7 +48,6 @@ public class TestListener implements ITestListener {
     }
 
     public void onTestSkipped(ITestResult iTestResult) {
-        //ReportHolder.getReport().skip(iTestResult.getThrowable());
         BrowserTestSuite.extent.removeTest(ReportHolder.getReport());
     }
 
