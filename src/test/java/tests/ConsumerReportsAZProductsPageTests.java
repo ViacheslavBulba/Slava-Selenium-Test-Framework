@@ -17,13 +17,13 @@ public class ConsumerReportsAZProductsPageTests extends BrowserTestSuite {
     @DataProvider(parallel = true)
     private Object[][] productsToTest() {
         return new Object[][]{
-            {"Air conditioners"},
-            {"Airline travel"},
+            {"Air Conditioners"},
+            {"Airline Travel"},
             {"Bacon"},
             {"Beer"},
             {"Batteries"},
             {"Cameras"},
-            {"Car insurance"},
+            {"Test To Fail"},
             {"Car seats"}
         };
     }
