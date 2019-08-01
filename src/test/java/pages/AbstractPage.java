@@ -7,7 +7,8 @@ import utils.PageFactoryLayer;
 
 public class AbstractPage extends PageFactoryLayer {
 
-    WebDriverWait wait = new WebDriverWait(browser.getWebDriver(), 5);
+    WebDriverWait wait = new WebDriverWait(browser.getWebDriver(), browser.getTimeout());
+    WebDriverWait waitLonger = new WebDriverWait(browser.getWebDriver(), browser.getTimeout()*3);
 
     public boolean isElementDisplayed(WebElement element) {
         try {

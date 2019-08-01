@@ -4,6 +4,7 @@ import static utils.FileSystem.fileSeparator;
 import static utils.FileSystem.userDir;
 
 import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.TakesScreenshot;
@@ -23,11 +24,10 @@ import java.util.concurrent.TimeUnit;
 
 public class Browser {
 
-    public static final int IMPLICITLY_WAIT_SECONDS = 10;
-
     protected WebDriver driver;
     private String url;
     private String seleniumGrid;
+    private long timeout;
 
     public Browser() {
         this.setUp();
@@ -51,12 +51,19 @@ public class Browser {
     public void setUp() {
         this.url = FileSystem.getPropertyFromConfigFile("url");
         this.seleniumGrid = FileSystem.getPropertyFromConfigFile("seleniumGrid");
-
+        try {
+            this.timeout = Long.parseLong(FileSystem.getPropertyFromConfigFile("timeout"));
+        } catch (NumberFormatException nfe) {
+            System.err.println(
+                "ERROR READING TIMEOUT VALUE FROM CONFIG\\TEST.PROPERTIES FILE. SETTING UP DEFAULT VALUE 10 SECONDS.");
+            this.timeout = 10L;
+        }
         if (seleniumGrid == null) {
             System.setProperty("webdriver.chrome.driver",
                                userDir + fileSeparator + "drivers" + fileSeparator + "chromedriver.exe");
             this.driver = new ChromeDriver();
-            this.driver.manage().timeouts().implicitlyWait(IMPLICITLY_WAIT_SECONDS, TimeUnit.SECONDS);
+
+            this.driver.manage().timeouts().implicitlyWait(timeout, TimeUnit.SECONDS);
         } else {
             DesiredCapabilities capabilities = new DesiredCapabilities();
             capabilities.setBrowserName("chrome");
@@ -131,6 +138,20 @@ public class Browser {
         } catch (IOException e) {
             Logger.fail("ERROR WHILE TAKING A PAGE SOURCE: " + e.getMessage());
             return e.getMessage();
+        }
+    }
+
+    public Long getTimeout() {
+        return this.timeout;
+    }
+
+    public Object executeScript(String js, Object... args) {
+        JavascriptExecutor executor = (JavascriptExecutor) getWebDriver();
+        try {
+            return executor.executeScript(js, args);
+        } catch (Exception e) {
+            Logger.fail("COULD NOT EXECUTE JAVASCRIPT! " + e.toString());
+            return null;
         }
     }
 
