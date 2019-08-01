@@ -2,8 +2,9 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Consumer Reports Tests" parallel="methods" thread-count="4" data-provider-thread-count="4">
     <listeners>
-        <listener class-name="utils.TestListener" />
-        <listener class-name="utils.SuiteListener" />
+        <listener class-name="listeners.TestListener" />
+        <listener class-name="listeners.retry.RetryTestListener" />
+        <listener class-name="listeners.retry.RetryTestSuiteListener" />
     </listeners>
     <test name="tests">
         <classes>

@@ -1,4 +1,4 @@
-Hello! To your attention is offered a simple framework for writing and running selenium tests.
+Hello! Just another simple framework for writing and running selenium tests is offered to your attention! Welcome!
 
 A brief instruction for use is given below.
 

@@ -1,9 +1,13 @@
-package utils;
+package listeners;
 
 import com.aventstack.extentreports.MediaEntityBuilder;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
+import utils.BrowserHolder;
+import utils.BrowserTestSuite;
+import utils.Logger;
+import utils.ReportHolder;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -44,7 +48,8 @@ public class TestListener implements ITestListener {
     }
 
     public void onTestSkipped(ITestResult iTestResult) {
-        ReportHolder.getReport().skip(iTestResult.getThrowable());
+        //ReportHolder.getReport().skip(iTestResult.getThrowable());
+        BrowserTestSuite.extent.removeTest(ReportHolder.getReport());
     }
 
     public void onTestFailedButWithinSuccessPercentage(ITestResult iTestResult) {
@@ -62,7 +67,7 @@ public class TestListener implements ITestListener {
         return formatForDateNow.format(dateNow);
     }
 
-    private String getTestName(ITestResult iTestResult) {
+    public String getTestName(ITestResult iTestResult) {
         String testName;
         String firstPartOfTestName;
         Object[] parameters = iTestResult.getParameters();
