@@ -62,7 +62,6 @@ public class Browser {
             System.setProperty("webdriver.chrome.driver",
                                userDir + fileSeparator + "drivers" + fileSeparator + "chromedriver.exe");
             this.driver = new ChromeDriver();
-
             this.driver.manage().timeouts().implicitlyWait(timeout, TimeUnit.SECONDS);
         } else {
             DesiredCapabilities capabilities = new DesiredCapabilities();

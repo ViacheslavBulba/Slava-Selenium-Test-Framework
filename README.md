@@ -1,15 +1,14 @@
-Hello! Just another simple framework for writing and running selenium tests is offered to your attention! Welcome!
+# Just another simple framework for writing and running selenium tests (Java + Maven + TestNG + Extent Reports)
 
-A brief instruction for use is given below.
-
-The MAVEN assembly system is used.
+## Description
 
 The execution of each test begins with the opening of the url specified in CONFIG\tests.properties
 
 There you can also specify the grid address for the remote launch of the tests:
 
 url = https://www.consumerreports.org/cro/a-to-z-index/products/index.htm
-;seleniumGrid = http://10.8.11.55:4444/wd/hub
+;seleniumGrid = http://10.157.153.36:4444/wd/hub
+timeout = 5
 
 In the DRIVERS folder, you need to add the current driver versions. At the moment, the tests will work only in CHROME, for other browsers the code has not been yet written.
 
@@ -17,15 +16,15 @@ The test run report is stored in the LOGS folder - LOG.HTML
 
 The HTML code of the page is saved in the PAGESOURCES folder if a test is failed.
 
-The screenshot of the page is saved in the SCREENSHOTS folder in case of a fail in a test. Screenshots can also be seen in the report LOG.HTML
+The screenshot of the page is saved in the SCREENSHOTS folder in case of a fail in a test. Screenshots can also be seen in the report inside LOG folder.
 
 PAGE OBJECT classes must be located in SRC \ TEST \ JAVA \ PAGES
 
 The test classes must be located in SRC \ TEST \ JAVA \ TESTS
 
-There are auxiliary classes in the UTILS folder.
+## How to run tests
 
-At the root of the project is TESTNG.XML, in which it is necessary to prescribe which classes to run with tests.
+At the root of the project there is a TESTNG.XML, in which it is necessary to prescribe which classes with tests to be run.
 
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
