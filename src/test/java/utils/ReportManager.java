@@ -22,6 +22,9 @@ public class ReportManager {
         htmlReportTitle = reportTitle;
     }
 
+    public static String getReportTitle() {
+        return htmlReportTitle;
+    }
 
     public static ExtentReports getInstance(String reportName) {
         if (extent == null) {

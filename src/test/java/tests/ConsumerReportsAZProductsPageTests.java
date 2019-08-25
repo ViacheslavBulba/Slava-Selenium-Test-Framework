@@ -24,7 +24,7 @@ public class ConsumerReportsAZProductsPageTests extends BrowserTestSuite {
             {"Batteries"},
             {"Cameras"},
             {"Test To Fail"},
-            {"Car seats"}
+            {"Car"}
         };
     }
 

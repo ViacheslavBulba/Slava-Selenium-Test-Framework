@@ -3,6 +3,8 @@ package listeners.retry;
 import org.testng.IRetryAnalyzer;
 import org.testng.ITestResult;
 import utils.FileSystem;
+import utils.SingleExtentTestReportHolder;
+import utils.ReportManager;
 
 public class RetryTest implements IRetryAnalyzer {
 
@@ -20,10 +22,12 @@ public class RetryTest implements IRetryAnalyzer {
             methodParameters = builder.substring(0, builder.length() - 2);
         }
         if (retryCount < ATTEMPTS && FileSystem.getPropertyFromConfigFile("seleniumGrid") != null) {
+            //if (retryCount < ATTEMPTS) {
             System.err.println(
-                String.format("Retrying Test: %s with parameters [%s], Attempt #%d", result.getMethod().getMethodName(),
-                              methodParameters, (retryCount + 1)));
+                    String.format("Retrying Test: %s with parameters [%s], Attempt #%d", result.getMethod().getMethodName(),
+                            methodParameters, (retryCount + 1)));
             retryCount++;
+            ReportManager.getInstance(ReportManager.getReportTitle()).removeTest(SingleExtentTestReportHolder.getExtentTest());
             return true;
         }
         return false;

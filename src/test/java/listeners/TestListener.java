@@ -5,50 +5,55 @@ import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 import utils.BrowserHolder;
-import utils.BrowserTestSuite;
-import utils.Logger;
-import utils.ReportHolder;
+import utils.SingleExtentTestReportHolder;
 
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 public class TestListener implements ITestListener {
 
+    private Set<String> testNamesInTheReport = new HashSet<>();
+
     public void onTestStart(ITestResult iTestResult) {
-        ReportHolder.createReport(getTestName(iTestResult));
+        SingleExtentTestReportHolder.createExtentTest(getTestName(iTestResult));
+        testNamesInTheReport.add(getTestName(iTestResult));
     }
 
     public void onTestSuccess(ITestResult iTestResult) {
-
     }
 
     public void onTestFailure(ITestResult iTestResult) {
-        String currentUrl = BrowserHolder.getBrowser().getWebDriver().getCurrentUrl();
-        String currentUrlLink = "<a href=\"" + currentUrl + "\" target=\"_blank\">" + currentUrl + "<a>";
-        String fileName = iTestResult.getName() + getDateAndTime();
         try {
+            String currentUrl = BrowserHolder.getBrowser().getWebDriver().getCurrentUrl();
+            String currentUrlLink = "<a href=\"" + currentUrl + "\" target=\"_blank\">" + currentUrl + "<a>";
+            String fileName = iTestResult.getName() + getDateAndTime();
             String errorMessageToDisplay = iTestResult.getThrowable().getMessage();
-            if (errorMessageToDisplay.contains("(Session info:")){
-                errorMessageToDisplay = errorMessageToDisplay.substring(0,errorMessageToDisplay.indexOf("(Session info:"));
+            if (errorMessageToDisplay.contains("(Session info:")) {
+                errorMessageToDisplay = errorMessageToDisplay.substring(0, errorMessageToDisplay.indexOf("(Session info:"));
             }
-            if (errorMessageToDisplay.contains("Build info:")){
-                errorMessageToDisplay = errorMessageToDisplay.substring(0,errorMessageToDisplay.indexOf("Build info:"));
+            if (errorMessageToDisplay.contains("Build info:")) {
+                errorMessageToDisplay = errorMessageToDisplay.substring(0, errorMessageToDisplay.indexOf("Build info:"));
             }
-            if (errorMessageToDisplay.contains("expected [true] but found [false]")){
+            if (errorMessageToDisplay.contains("expected [true] but found [false]")) {
                 errorMessageToDisplay = errorMessageToDisplay.substring(0, errorMessageToDisplay.indexOf("expected [true] but found [false]") - 1);
             }
-            ReportHolder.getReport().fail(errorMessageToDisplay + "<br>" + currentUrlLink + "<br>",
-                                          MediaEntityBuilder.createScreenCaptureFromPath(
-                                              BrowserHolder.getBrowser().getScreenshot(fileName)).build());
-        } catch (IOException e) {
-            Logger.fail("ERROR WHILE TAKING A SCREENSHOT: " + e.getMessage());
+            SingleExtentTestReportHolder.getExtentTest().fail(errorMessageToDisplay + "<br>" + currentUrlLink + "<br>",
+                    MediaEntityBuilder.createScreenCaptureFromPath(BrowserHolder.getBrowser().getScreenshot(fileName))
+                            .build());
+            BrowserHolder.getBrowser().getPageSource(fileName);
+        } catch (Exception e) {
+            SingleExtentTestReportHolder.getExtentTest().fail(
+                    "Severe test failure, probably timed out receiving message from renderer: 300.000");//fail the test in any case
         }
-        BrowserHolder.getBrowser().getPageSource(getTestName(iTestResult) + getDateAndTime());
     }
 
     public void onTestSkipped(ITestResult iTestResult) {
-        BrowserTestSuite.extent.removeTest(ReportHolder.getReport());
+        if (!testNamesInTheReport.contains(getTestName(iTestResult))) {
+            SingleExtentTestReportHolder.createExtentTest(getTestName(iTestResult));
+            SingleExtentTestReportHolder.getExtentTest().skip(iTestResult.getThrowable().getMessage());
+        }
     }
 
     public void onTestFailedButWithinSuccessPercentage(ITestResult iTestResult) {

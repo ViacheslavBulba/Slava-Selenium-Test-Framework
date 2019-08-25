@@ -21,6 +21,7 @@ public class BrowserTestSuite {
         clearFolder("logs");
         clearFolder("screenshots");
         clearFolder("pagesources");
+        //ReportManager.setReportTitle(iTestContext.getSuite().getName());//you cane set html report title here
         extent = ReportManager.getInstance(iTestContext.getSuite().getName());
     }
 
