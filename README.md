@@ -49,3 +49,5 @@ Tests can be run through the IDE or maven goal "test".
 In IntelliJ IDEA, tests can be run via the RUN - EDIT CONFIGURATIONS menu, adding the necessary configuration (for example, TestNG - Suite).
 
 Tests are run in parallel. The number of threads can be adjusted in TESTNG.XML: thread-count = "2" data-provider-thread-count = "2"
+
+Tests retry implemented. Retry runs only when you run your tests on selenium grid and does not run when you run tests locally, otherwise it makes test local debugging annoying.
