@@ -44,15 +44,25 @@ public class TestListener implements ITestListener {
                             .build());
             BrowserHolder.getBrowser().getPageSource(fileName);
         } catch (Exception e) {
-            SingleExtentTestReportHolder.getExtentTest().fail(
-                    "Severe test failure, probably timed out receiving message from renderer: 300.000");//fail the test in any case
+            String errorMessage = e.getMessage();
+            if (errorMessage.contains("timed out receiving message from renderer")) {
+                errorMessage = "Timed out receiving message from renderer. Browser got stuck.";
+            }
+            if (errorMessage.contains("Could not start a new session")) {
+                errorMessage = "UnreachableBrowserException: Could not start a new session. Possible causes are invalid address of the remote server or browser start-up failure. Check if Selenium Grid is up and running.";
+            }
+            SingleExtentTestReportHolder.getExtentTest().fail(errorMessage);
         }
     }
 
     public void onTestSkipped(ITestResult iTestResult) {
         if (!testNamesInTheReport.contains(getTestName(iTestResult))) {
             SingleExtentTestReportHolder.createExtentTest(getTestName(iTestResult));
-            SingleExtentTestReportHolder.getExtentTest().skip(iTestResult.getThrowable().getMessage());
+            String messageToReport = iTestResult.getThrowable().getMessage();
+            if (messageToReport.contains("depends on not successfully finished methods")){
+                messageToReport = "Test was skipped as it depends on not successfully finished methods! Even though all other tests can be passed since we have retry in place.";
+            }
+            SingleExtentTestReportHolder.getExtentTest().skip(messageToReport);
         }
     }
 

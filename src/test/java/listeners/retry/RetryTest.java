@@ -6,6 +6,8 @@ import utils.FileSystem;
 import utils.SingleExtentTestReportHolder;
 import utils.ReportManager;
 
+import static utils.ReportManager.htmlReportTitle;
+
 public class RetryTest implements IRetryAnalyzer {
 
     private int retryCount = 0;
@@ -27,7 +29,11 @@ public class RetryTest implements IRetryAnalyzer {
                     String.format("Retrying Test: %s with parameters [%s], Attempt #%d", result.getMethod().getMethodName(),
                             methodParameters, (retryCount + 1)));
             retryCount++;
-            ReportManager.getInstance(ReportManager.getReportTitle()).removeTest(SingleExtentTestReportHolder.getExtentTest());
+            try {
+                ReportManager.getInstance(htmlReportTitle).removeTest(SingleExtentTestReportHolder.getExtentTest());
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
             return true;
         }
         return false;

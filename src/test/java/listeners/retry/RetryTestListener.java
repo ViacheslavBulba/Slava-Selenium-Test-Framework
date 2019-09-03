@@ -10,11 +10,11 @@ import java.lang.reflect.Method;
 public class RetryTestListener implements IAnnotationTransformer {
 
     @Override
-    public void transform(ITestAnnotation testannotation, Class testClass, Constructor testConstructor,
+    public void transform(ITestAnnotation testAnnotation, Class testClass, Constructor testConstructor,
                           Method testMethod) {
-        IRetryAnalyzer retry = testannotation.getRetryAnalyzer();
+        IRetryAnalyzer retry = testAnnotation.getRetryAnalyzer();
         if (retry == null) {
-            testannotation.setRetryAnalyzer(RetryTest.class);
+            testAnnotation.setRetryAnalyzer(RetryTest.class);
         }
     }
 

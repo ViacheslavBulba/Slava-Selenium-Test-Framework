@@ -16,7 +16,7 @@ import java.util.Date;
 public class ReportManager {
 
     private static ExtentReports extent;
-    private static String htmlReportTitle = "Test Run Report";
+    public static String htmlReportTitle = "Test Run Report";
 
     public static void setReportTitle(String reportTitle) {
         htmlReportTitle = reportTitle;
