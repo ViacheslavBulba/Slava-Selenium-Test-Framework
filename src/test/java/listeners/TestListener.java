@@ -16,12 +16,16 @@ public class TestListener implements ITestListener {
 
     private Set<String> testNamesInTheReport = new HashSet<>();
 
+    public static Set<String> failedTests = new HashSet<>();
+    public static Set<String> skippedTests = new HashSet<>();
+
     public void onTestStart(ITestResult iTestResult) {
         SingleExtentTestReportHolder.createExtentTest(getTestName(iTestResult));
         testNamesInTheReport.add(getTestName(iTestResult));
     }
 
     public void onTestSuccess(ITestResult iTestResult) {
+        failedTests.remove(getTestName(iTestResult));
     }
 
     public void onTestFailure(ITestResult iTestResult) {
@@ -53,6 +57,7 @@ public class TestListener implements ITestListener {
             }
             SingleExtentTestReportHolder.getExtentTest().fail(errorMessage);
         }
+        failedTests.add(getTestName(iTestResult));
     }
 
     public void onTestSkipped(ITestResult iTestResult) {
@@ -63,6 +68,7 @@ public class TestListener implements ITestListener {
                 messageToReport = "Test was skipped as it depends on not successfully finished methods! Even though all other tests can be passed since we have retry in place.";
             }
             SingleExtentTestReportHolder.getExtentTest().skip(messageToReport);
+            skippedTests.add(getTestName(iTestResult));
         }
     }
 

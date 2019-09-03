@@ -1,9 +1,12 @@
 package utils;
 
+import static listeners.TestListener.failedTests;
+import static listeners.TestListener.skippedTests;
 import static utils.FileSystem.clearFolder;
 
 import com.aventstack.extentreports.ExtentReports;
 import org.testng.ITestContext;
+import org.testng.TestException;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
@@ -21,7 +24,7 @@ public class BrowserTestSuite {
         clearFolder("logs");
         clearFolder("screenshots");
         clearFolder("pagesources");
-        //ReportManager.setReportTitle(iTestContext.getSuite().getName());//you cane set html report title here
+        //ReportManager.setReportTitle(iTestContext.getSuite().getName());//you can set html report title here
         extent = ReportManager.getInstance(iTestContext.getSuite().getName());
     }
 
@@ -43,5 +46,11 @@ public class BrowserTestSuite {
         extent.flush();
     }
 
+    @AfterSuite(alwaysRun = true)
+    public void createTestFailureIfThereAreOnlySuccessAndSkippedTests() {
+        if (failedTests.size() == 0 && skippedTests.size() > 0) {
+            throw new TestException("There are skipped tests");
+        }
+    }
 
 }
