@@ -63,8 +63,13 @@ public class Browser {
             this.timeout = 10L;
         }
         if (seleniumGrid == null) {
-            System.setProperty("webdriver.chrome.driver",
-                    userDir + fileSeparator + "drivers" + fileSeparator + "chromedriver.exe");
+            if (System.getProperty("os.name").toLowerCase().contains("mac")) {
+                System.setProperty("webdriver.chrome.driver",
+                        userDir + fileSeparator + "drivers" + fileSeparator + "chromedriver");
+            } else {
+                System.setProperty("webdriver.chrome.driver",
+                        userDir + fileSeparator + "drivers" + fileSeparator + "chromedriver.exe");
+            }
             ChromeOptions options = new ChromeOptions();//work around for [SEVERE]: Timed out receiving message from renderer: 300.000
             //AGRESSIVE: options.setPageLoadStrategy(PageLoadStrategy.NONE); // https://www.skptricks.com/2018/08/timed-out-receiving-message-from-renderer-selenium.html
             options.addArguments("start-maximized"); // https://stackoverflow.com/a/26283818/1689770
