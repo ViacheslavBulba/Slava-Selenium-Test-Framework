@@ -43,6 +43,7 @@ public class TestListener implements ITestListener {
             if (errorMessageToDisplay.contains("expected [true] but found [false]")) {
                 errorMessageToDisplay = errorMessageToDisplay.substring(0, errorMessageToDisplay.indexOf("expected [true] but found [false]") - 1);
             }
+            errorMessageToDisplay = errorMessageToDisplay.substring(0, 1).toUpperCase() + errorMessageToDisplay.substring(1);
             SingleExtentTestReportHolder.getExtentTest().fail(errorMessageToDisplay + "<br>" + currentUrlLink + "<br>",
                     MediaEntityBuilder.createScreenCaptureFromPath(BrowserHolder.getBrowser().getScreenshot(fileName))
                             .build());
@@ -87,7 +88,7 @@ public class TestListener implements ITestListener {
         return formatForDateNow.format(dateNow);
     }
 
-    public String getTestName(ITestResult iTestResult) {
+    private String getTestName(ITestResult iTestResult) {
         String testName;
         String firstPartOfTestName;
         Object[] parameters = iTestResult.getParameters();
