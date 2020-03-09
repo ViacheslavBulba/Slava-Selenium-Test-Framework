@@ -1,9 +1,12 @@
 package pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import utils.PageFactoryLayer;
+
+import java.util.List;
 
 public class AbstractPage extends PageFactoryLayer {
 
@@ -20,5 +23,15 @@ public class AbstractPage extends PageFactoryLayer {
             return false;
         }
     }
+
+    public boolean isElementPresent(String cssLocator) {
+        List<WebElement> elements = browser.getWebDriver().findElements(By.cssSelector(cssLocator));
+        if (elements.size() == 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
 
 }
