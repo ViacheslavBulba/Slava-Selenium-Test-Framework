@@ -21,6 +21,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.concurrent.TimeUnit;
 
 public class Browser {
@@ -132,7 +133,7 @@ public class Browser {
         }
     }
 
-    public String getPageSource(String pageSourceName) {
+    public void getPageSource(String pageSourceName) {
         try {
             String folderString = userDir + fileSeparator + "pagesources";
             File folder = new File(folderString);
@@ -141,10 +142,10 @@ public class Browser {
             }
             String filePath = folderString + fileSeparator + pageSourceName + ".html";
             String content = driver.getPageSource();
-            OutputStream fileOutputStream = new FileOutputStream(new File(filePath));
-            OutputStreamWriter swriter = new OutputStreamWriter(fileOutputStream, "UTF8");
-            swriter.write(content);
-            swriter.close();
+            OutputStream file = new FileOutputStream(filePath);
+            OutputStreamWriter writer = new OutputStreamWriter(file, StandardCharsets.UTF_8);
+            writer.write(content);
+            writer.close();
             if (System.getenv("BUILD_URL") == null) {
                 filePath = folderString + fileSeparator + pageSourceName + ".html";
             } else {
@@ -152,10 +153,9 @@ public class Browser {
                     System.getenv("BUILD_URL") + "artifact" + fileSeparator + "pagesources" + fileSeparator
                     + pageSourceName + ".html";
             }
-            return filePath;
         } catch (IOException e) {
-            Logger.fail("ERROR WHILE TAKING A PAGE SOURCE: " + e.getMessage());
-            return e.getMessage();
+            Logger.fail("ERROR WHILE TAKING PAGE SOURCE: " + e.getMessage());
+            e.getMessage();
         }
     }
 
@@ -168,7 +168,7 @@ public class Browser {
         try {
             return executor.executeScript(js, args);
         } catch (Exception e) {
-            Logger.fail("COULD NOT EXECUTE JAVASCRIPT! " + e.toString());
+            Logger.fail("COULD NOT EXECUTE JAVASCRIPT! " + e);
             return null;
         }
     }
