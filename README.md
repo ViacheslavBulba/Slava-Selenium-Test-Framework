@@ -38,7 +38,7 @@ At the root of the project there is a testng.xml, where you can specify classes 
     </listeners>
     <test name="test name from testng.xml">
         <classes>
-            <class name="tests.ConsumerReportsAZProductsPageTests" />
+            <class name="tests.Tests" />
         </classes>
     </test>
 </suite>

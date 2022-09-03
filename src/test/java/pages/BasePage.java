@@ -8,13 +8,9 @@ import utils.PageFactoryLayer;
 
 import java.util.List;
 
-public class AbstractPage extends PageFactoryLayer {
+public class BasePage extends PageFactoryLayer {
 
     WebDriverWait wait = new WebDriverWait(browser.getWebDriver(), browser.getTimeout());
-    WebDriverWait waitLonger = new WebDriverWait(browser.getWebDriver(), browser.getTimeout()*3);
-
-    String regExpForExact7or40Symbols = "^(?=.{7}$).*|^(?=.{40}$).*";
-    String regExpFor40Symbols = "^.{40}$";
 
     public boolean isElementDisplayed(WebElement element) {
         try {
@@ -33,5 +29,10 @@ public class AbstractPage extends PageFactoryLayer {
         }
     }
 
-
+    public void sleep(int seconds) {
+        try {
+            Thread.sleep(seconds * 1000);
+        } catch (InterruptedException ignore) {
+        }
+    }
 }

@@ -96,9 +96,9 @@ public class Browser {
     }
 
     public void openHost() {
-        Logger.pass("Opening page " + url);
-        this.driver.get(url);
+        Logger.pass("Open page " + url);
         this.driver.manage().window().maximize();
+        this.driver.get(url);
     }
 
     public void quit() {

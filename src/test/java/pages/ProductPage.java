@@ -4,9 +4,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
-public class ConsumerReportsProductPage extends AbstractPage {
+public class ProductPage extends BasePage {
 
-    @FindBy(className = "header-text")
+    @FindBy(css = ".crux-page-title.title-case")
     private WebElement header;
 
     public String getPageHeader() {
