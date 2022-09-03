@@ -1,0 +1,3 @@
+https://chromedriver.chromium.org/downloads
+
+sudo xattr -dr com.apple.quarantine "/Users/bulbavi/git/Test-Automation-Framework-Web-Selenium-Java-Maven-TestNG-ExtentReports/drivers/chromedriver" && sudo chmod -R 777 "/Users/bulbavi/git/Test-Automation-Framework-Web-Selenium-Java-Maven-TestNG-ExtentReports/drivers/chromedriver"
