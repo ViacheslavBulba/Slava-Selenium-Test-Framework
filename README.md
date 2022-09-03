@@ -1,10 +1,10 @@
-# Just another simple framework for writing and running selenium tests (Java + Maven + TestNG + Extent Reports)
+# Just another simple framework for writing and running selenium tests (Java + Maven + TestNG + Selenium + Extent Reports)
 
 ## Description
 
-The execution of each test begins with the opening of the url specified in CONFIG\tests.properties
+Specify start URL in config\tests.properties
 
-There you can also specify the grid address for the remote launch of the tests:
+There you can also specify selenium grid address for the remote launch of the tests:
 
 ```
 url = https://www.consumerreports.org/cro/a-to-z-index/products/index.htm
@@ -12,21 +12,21 @@ url = https://www.consumerreports.org/cro/a-to-z-index/products/index.htm
 timeout = 5
 ```
 
-In the DRIVERS folder, you need to add the current driver versions. At the moment, the tests will work only in CHROME, for other browsers the code has not been yet written.
+You need to add/update driver versions in 'drivers' folder. For simplicity - only Chrome browser is supported for now.
 
-The test run report is stored in the LOGS folder - LOG.HTML
+Test run report will be created in 'logs' folder.
 
-The HTML code of the page is saved in the PAGESOURCES folder if a test is failed.
+The HTML code of the page is saved in the 'pagesources' folder if a test is failed.
 
-The screenshot of the page is saved in the SCREENSHOTS folder in case of a fail in a test. Screenshots can also be seen in the report inside LOG folder.
+The screenshot of the page is saved in the 'screenshot' folder if a test is failed. Screenshots can also be seen in the html report inside 'logs' folder.
 
-PAGE OBJECT classes must be located in SRC \ TEST \ JAVA \ PAGES
+Page Object classes - SRC \ TEST \ JAVA \ PAGES
 
-The test classes must be located in SRC \ TEST \ JAVA \ TESTS
+Test scenarios classes - SRC \ TEST \ JAVA \ TESTS
 
 ## How to run tests
 
-At the root of the project there is a TESTNG.XML, in which it is necessary to prescribe which classes with tests to be run.
+At the root of the project there is a testng.xml, where you can specify classes with tests to be run.
 
 ```
 <?xml version="1.0" encoding="UTF-8"?>
@@ -46,8 +46,8 @@ At the root of the project there is a TESTNG.XML, in which it is necessary to pr
 
 Tests can be run through the IDE or maven goal "test".
 
-In IntelliJ IDEA, tests can be run via the RUN - EDIT CONFIGURATIONS menu, adding the necessary configuration (for example, TestNG - Suite).
+In IntelliJ IDEA, tests can be run via Run -> Edit Configurations menu, add 'TestNG - Suite' configuration and specify path to testng.xml.
 
-Tests are run in parallel. The number of threads can be adjusted in TESTNG.XML: thread-count = "2" data-provider-thread-count = "2"
+Tests are run in parallel. The number of threads can be adjusted in testng.xml: thread-count = "2" data-provider-thread-count = "2"
 
-Tests retry implemented. Retry runs only when you run your tests on selenium grid and does not run when you run tests locally, otherwise it makes test local debugging annoying.
+Tests retry mechanism is implemented. Retry runs only when you run your tests on selenium grid and does not run when you run tests locally, otherwise it makes test local debugging annoying.
