@@ -14,8 +14,13 @@ public class MenuPage extends BasePage {
     @FindBy(css = ".products-a-z__results__item")
     private List<WebElement> productLinks;
 
-    public List<String> getAllLinks() {
-        return productLinks.stream().map(WebElement::getText).collect(Collectors.toList());
+    public List<String> getAllProductLinksTexts() {
+        List<String> result =
+            productLinks.stream().map(WebElement::getText).collect(Collectors.toList());
+        for (int i = 0; i < result.size(); i++) {
+            result.set(i, result.get(i).replace("\n", " "));
+        }
+        return result;
     }
 
     public ProductPage clickOnProductLink(String link) {
