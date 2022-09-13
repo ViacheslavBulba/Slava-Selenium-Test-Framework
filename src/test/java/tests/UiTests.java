@@ -17,7 +17,6 @@ public class UiTests extends BrowserTestSuite {
     @Test(description = "List of products is displayed on the menu page")
     public void checkListOfProducts() {
         MenuPage menu = new MenuPage();
-        menu.sleep(2); // sleep is added just for better visibility of what is going on in the browser, use WebDriverWait in real tests
         Logger.pass("Get text from all links");
         List<String> allLinksTexts = menu.getAllProductLinksTexts();
         Logger.pass("Check that specific product links are present on the A-Z page");

@@ -30,6 +30,7 @@ public class BasePage extends PageFactoryLayer {
     }
 
     public void sleep(int seconds) {
+        System.out.println("sleep " + seconds + " second(s)");
         try {
             Thread.sleep(seconds * 1000);
         } catch (InterruptedException ignore) {
