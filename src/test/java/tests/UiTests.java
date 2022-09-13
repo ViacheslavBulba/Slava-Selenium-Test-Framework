@@ -9,7 +9,7 @@ import pages.ProductPage;
 import utils.BrowserTestSuite;
 import utils.Logger;
 
-public class Tests extends BrowserTestSuite {
+public class UiTests extends BrowserTestSuite {
 
     @DataProvider(parallel = true)
     private Object[][] productsToTest() {
