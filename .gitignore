@@ -5,6 +5,7 @@
 *.log
 /logs/
 /screenshots/
+/allure-results/
 
 # BlueJ files
 *.ctxt

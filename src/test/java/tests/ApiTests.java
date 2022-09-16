@@ -154,7 +154,7 @@ public class ApiTests {
         request.header("Content-Type", "application/json"); // Content-Type: application/json; charset=utf-8
         Response response = request.post("/api/users");
         response.prettyPrint();
-        assertResponseCodeAndTime(response, 201, 2000L); // 201 Created
+        assertResponseCodeAndTime(response, 201, 5000L); // 201 Created
         String id = response.jsonPath().getString("id");
         assertNotNull(id, "id - is missing in response"); // or use assertFiledIsPresentInResponseAndNotEmpty(id, "id");
         assertTrue(id.length() > 0, "id - is empty in response");
