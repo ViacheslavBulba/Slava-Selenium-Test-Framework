@@ -76,6 +76,7 @@ public class ApiDevicesTests {
         assertResponseCodeAndTime(devicesResponse, 200, 2000L);
         List<Map<String, Object>> devices = devicesResponse.as(new TypeRef<List<Map<String, Object>>>() {
         });
+        assertTrue(devices.size() > 0, "no devices in response");
         assertNotNull(devices.get(0).get("id"), "there is no id field in response");
         String deviceId = devices.get(0).get("id").toString();
         System.out.println("deviceId = " + deviceId);

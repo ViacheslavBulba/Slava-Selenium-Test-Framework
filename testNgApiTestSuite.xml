@@ -3,7 +3,7 @@
 <suite name="Test Set Name" parallel="methods" thread-count="1" data-provider-thread-count="1">
     <test name="API tests">
         <classes>
-            <class name="tests.ApiDevicesTests" />
+            <class name="tests.ApiTests" />
         </classes>
     </test>
 </suite>
