@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Test Set Name in XML" parallel="methods" thread-count="1" data-provider-thread-count="1">
-
+<suite name="Test suite name in xml - UI tests" parallel="methods" thread-count="1" data-provider-thread-count="1">
     <listeners>
         <listener class-name="listeners.TestListener" />
         <listener class-name="listeners.retry.RetryTestListener" />
     </listeners>
-    <test name="UI tests">
+    <test name="Test class run name in xml - UI tests">
         <classes>
             <class name="tests.UiTests" />
         </classes>

@@ -24,6 +24,7 @@ public class BrowserTestSuite {
         clearFolder("logs");
         clearFolder("screenshots");
         clearFolder("pagesources");
+        clearFolder("allure-results");
         //ReportManager.setReportTitle(iTestContext.getSuite().getName());//you can set html report title here
         extent = ReportManager.getInstance(iTestContext.getSuite().getName());
     }

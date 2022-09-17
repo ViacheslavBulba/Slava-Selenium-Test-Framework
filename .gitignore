@@ -3,6 +3,7 @@
 
 # Log file
 *.log
+/ajcore*.txt
 /logs/
 /screenshots/
 /allure-results/
@@ -40,5 +41,3 @@ hs_err_pid*
 .classpath
 .project
 .idea/
-
-

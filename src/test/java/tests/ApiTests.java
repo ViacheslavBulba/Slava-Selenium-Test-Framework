@@ -13,6 +13,7 @@ import static org.hamcrest.Matchers.not;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertTrue;
+import static utils.FileSystem.clearFolder;
 
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
@@ -29,6 +30,7 @@ public class ApiTests {
 
     @BeforeSuite
     private void setUp(ITestContext context) {
+        clearFolder("allure-results");
         RestAssured.baseURI = "https://reqres.in";
     }
 
