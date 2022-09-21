@@ -34,7 +34,7 @@ public class ApiTests {
         RestAssured.baseURI = "https://reqres.in";
     }
 
-    @Test(description = "KuCoin public api test")
+    @Test(description = "GET - KuCoin public api test")
     public void kuCoinApiTest() {
         given().filter(new AllureRestAssured()).
         when().
@@ -100,8 +100,8 @@ public class ApiTests {
 //        assertEquals(products.get(0).get("id"), 2, "first id is not 2");
     }
 
-    @Test
-    public void getRequestExamplePureRestAssured() {
+    @Test(description = "GET - getUsers")
+    public void getUsers() {
         given().filter(new AllureRestAssured()).
         get("/api/users?page=2").
         then().
@@ -125,7 +125,7 @@ public class ApiTests {
         assertTrue(fieldValue.length() > 0, fieldDescriptionForErrorMessage + " - is empty in response");
     }
 
-    @Test
+    @Test(description = "GET - getListOfAllNames")
     public void getListOfAllNames() {
         Response response = given().filter(new AllureRestAssured()).get("/api/users?page=2");
         System.out.println(response.asString());
@@ -135,7 +135,7 @@ public class ApiTests {
         assertTrue(allNames.size() > 0, "names list is empty");
     }
 
-    @Test
+    @Test(description = "POST - createUserViaPost")
     public void createUserViaPost(ITestContext context) {
 //        given().
 //            body("{\"name\":\"test\",\"job\":\"test automation\"}").
@@ -168,14 +168,14 @@ public class ApiTests {
         // also get user by id after post
     }
 
-//    @Test(dependsOnMethods = {"postRequestExample"})
+//    @Test(dependsOnMethods = {"createUserViaPost"})
 //    public void getCreatedUser(ITestContext context) {
 //        Response response = get("/api/users/" + context.getAttribute("id"));
 //        System.out.println(response.asString());
 //        assertResponseCodeAndTime(response,200, 2000L);
 //    }
 
-    @Test // (dependsOnMethods = {"postRequestExample"})
+    @Test(description = "PATCH - updateUserViaPatch", dependsOnMethods = {"createUserViaPost"}) // (dependsOnMethods = {"postRequestExample"})
     public void updateUserViaPatch(ITestContext context) {
         String newName = "patched name";
         JSONObject body = new JSONObject();
