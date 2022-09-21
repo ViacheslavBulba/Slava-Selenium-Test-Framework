@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Test suite name in xml - API tests" parallel="methods" thread-count="1" data-provider-thread-count="1">
+<suite name="Test suite name in xml - API tests" parallel="methods" thread-count="4" data-provider-thread-count="4">
     <test name="Test class run name in xml - API tests">
         <classes>
             <class name="tests.ApiTests" />

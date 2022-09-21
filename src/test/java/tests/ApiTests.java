@@ -1,7 +1,6 @@
 package tests;
 
-import static io.restassured.RestAssured.get;
-import static io.restassured.RestAssured.when;
+import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
 import static io.restassured.path.json.JsonPath.from;
 import static org.hamcrest.Matchers.empty;
@@ -15,6 +14,7 @@ import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertTrue;
 import static utils.FileSystem.clearFolder;
 
+import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
@@ -34,8 +34,9 @@ public class ApiTests {
         RestAssured.baseURI = "https://reqres.in";
     }
 
-    //@Test(description = "KuCoin public api test")
+    @Test(description = "KuCoin public api test")
     public void kuCoinApiTest() {
+        given().filter(new AllureRestAssured()).
         when().
             get("https://api.kucoin.com/api/v1/market/stats?symbol=LTC-USDT").
         then().
@@ -101,6 +102,7 @@ public class ApiTests {
 
     @Test
     public void getRequestExamplePureRestAssured() {
+        given().filter(new AllureRestAssured()).
         get("/api/users?page=2").
         then().
             statusCode(200).
@@ -125,7 +127,7 @@ public class ApiTests {
 
     @Test
     public void getListOfAllNames() {
-        Response response = get("/api/users?page=2");
+        Response response = given().filter(new AllureRestAssured()).get("/api/users?page=2");
         System.out.println(response.asString());
         assertResponseCodeAndTime(response,200, 2000L);
         List<String> allNames = from(response.asString()).getList("data.first_name");
@@ -152,8 +154,9 @@ public class ApiTests {
         body.put("name", name);
         body.put("job", job);
         System.out.println(body);
-        RequestSpecification request = RestAssured.given();
+        RequestSpecification request = RestAssured.given().filter(new AllureRestAssured());
         request.header("Content-Type", "application/json"); // Content-Type: application/json; charset=utf-8
+        request.body(body);
         Response response = request.post("/api/users");
         response.prettyPrint();
         assertResponseCodeAndTime(response, 201, 5000L); // 201 Created
@@ -178,8 +181,9 @@ public class ApiTests {
         JSONObject body = new JSONObject();
         body.put("name", newName);
         System.out.println(body);
-        RequestSpecification request = RestAssured.given();
+        RequestSpecification request = RestAssured.given().filter(new AllureRestAssured());
         request.header("Content-Type", "application/json");
+        request.body(body);
         Response response = request.patch("/api/users/2"); // or take id from context
         response.prettyPrint();
         assertResponseCodeAndTime(response, 200, 2000L);

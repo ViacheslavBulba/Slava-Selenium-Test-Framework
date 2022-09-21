@@ -1,4 +1,4 @@
-# Just another simple framework for writing and running selenium tests (Java + Maven + TestNG + Selenium + Extent Reports)
+# Just another simple framework for writing and running selenium tests (Java + Maven + TestNG + Selenium)
 
 ## Description
 
@@ -46,11 +46,11 @@ At the root of the project there is a testng.xml, where you can specify classes 
 
 Tests can be run through the IDE or maven goal "test".
 
-In IntelliJ IDEA, tests can be run via Run -> Edit Configurations menu, add 'TestNG - Suite' configuration and specify path to testng.xml.
+In IntelliJ IDEA, tests can be run via Run -> Edit Configurations menu, add 'TestNG - Suite' configuration and specify the path to the testng.xml.
 
-Tests are run in parallel. The number of threads can be adjusted in testng.xml: thread-count = "2" data-provider-thread-count = "2"
+Tests can be run in parallel. The number of threads can be adjusted in testng.xml: thread-count = "2" data-provider-thread-count = "2"
 
-Tests retry mechanism is implemented. Retry runs only when you run your tests on selenium grid and does not run when you run tests locally, otherwise it makes test local debugging annoying.
+Tests retry mechanism is implemented. Retry runs only when you run your tests on selenium grid and does not run when you run tests locally, otherwise it makes test debugging annoying.
 
 ## Allure report
 
