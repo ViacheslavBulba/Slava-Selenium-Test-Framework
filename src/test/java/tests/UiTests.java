@@ -42,6 +42,6 @@ public class UiTests extends BrowserTestSuite {
         ProductPage product = menu.clickOnProductLink(linkTitle);
         product.sleep(2); // sleep is added just for better visibility of what is going on in the browser, use WebDriverWait in real tests
         Logger.pass("Check that the header of the opened page contains: " + linkTitle);
-        assertTrue(product.getPageHeader().toLowerCase().contains(linkTitle.toLowerCase()));
+        assertTrue(product.getPageHeader().toLowerCase().contains(linkTitle.toLowerCase()), "Header on the top of the page should be the same as the link text");
     }
 }

@@ -1,9 +1,11 @@
 package utils;
 
 import com.aventstack.extentreports.Status;
+import io.qameta.allure.Step;
 
 public class Logger {
 
+    @Step
     public static void pass(String text) {
         System.out.println(text);
         try {
@@ -12,6 +14,7 @@ public class Logger {
         }
     }
 
+    @Step
     public static void info(String text) {
         System.out.println(text);
         try {
@@ -20,6 +23,7 @@ public class Logger {
         }
     }
 
+    @Step
     public static void fail(String text) {
         System.out.println(text);
         try {
