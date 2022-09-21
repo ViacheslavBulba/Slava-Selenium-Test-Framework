@@ -1,12 +1,14 @@
 package listeners;
 
 import com.aventstack.extentreports.MediaEntityBuilder;
+import io.qameta.allure.Allure;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 import utils.BrowserHolder;
 import utils.SingleExtentTestReportHolder;
 
+import java.io.ByteArrayInputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
@@ -57,6 +59,8 @@ public class TestListener implements ITestListener {
                 errorMessage = "UnreachableBrowserException: Could not start a new session. Possible causes are invalid address of the remote server or browser start-up failure. Check if Selenium Grid is up and running.";
             }
             SingleExtentTestReportHolder.getExtentTest().fail(errorMessage);
+        } finally {
+            Allure.addAttachment("Screenshot from onTestFailure", new ByteArrayInputStream(BrowserHolder.getBrowser().getScreenshotAsByteArray()));
         }
         failedTests.add(getTestName(iTestResult));
     }

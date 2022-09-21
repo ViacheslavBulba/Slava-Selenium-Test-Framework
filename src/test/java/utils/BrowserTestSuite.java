@@ -36,6 +36,8 @@ public class BrowserTestSuite {
 
     @AfterMethod(alwaysRun = true)
     public void browserQuit() {
+        // Allure.addAttachment("my attachment", "string test");
+        // Allure.addAttachment("Screenshot from browserQuit", new ByteArrayInputStream(BrowserHolder.getBrowser().getScreenshotAsByteArray()));
         if (BrowserHolder.isBrowserCreated()) {
             BrowserHolder.getBrowser().quit();
         }

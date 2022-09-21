@@ -54,4 +54,4 @@ Tests retry mechanism is implemented. Retry runs only when you run your tests on
 
 ## Allure report
 
-allure serve /Users/bulbavi/git/Test-Automation-Framework-Web-Selenium-Java-Maven-TestNG-ExtentReports/allure-results
+allure serve allure-results

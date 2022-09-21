@@ -11,7 +11,6 @@ import org.openqa.selenium.Platform;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
@@ -54,14 +53,14 @@ public class Browser {
     public void setUp() {
         this.url = FileSystem.getPropertyFromConfigFile("url");
         this.seleniumGrid = System.getProperty("seleniumGrid") == null
-                ? FileSystem.getPropertyFromConfigFile("seleniumGrid")
-                : System.getProperty("seleniumGrid");
+                            ? FileSystem.getPropertyFromConfigFile("seleniumGrid")
+                            : System.getProperty("seleniumGrid");
         System.out.println("seleniumGrid = " + this.seleniumGrid);
         try {
             this.timeout = Long.parseLong(FileSystem.getPropertyFromConfigFile("timeout"));
         } catch (NumberFormatException nfe) {
             System.err.println(
-                    "ERROR READING TIMEOUT VALUE FROM CONFIG\\TESTS.PROPERTIES FILE. SETTING UP DEFAULT VALUE 10 SECONDS.");
+                "ERROR READING TIMEOUT VALUE FROM CONFIG\\TESTS.PROPERTIES FILE. SETTING UP DEFAULT VALUE 10 SECONDS.");
             this.timeout = 10L;
         }
         if (seleniumGrid == null) {
@@ -136,6 +135,10 @@ public class Browser {
             Logger.fail("ERROR WHILE TAKING A SCREENSHOT: " + e.getMessage());
             return e.getMessage();
         }
+    }
+
+    public byte[] getScreenshotAsByteArray() {
+        return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
     }
 
     public void getPageSource(String pageSourceName) {
