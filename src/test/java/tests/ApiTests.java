@@ -42,7 +42,7 @@ public class ApiTests {
         then().
             statusCode(200).
             log().body().
-            time(lessThan(2000L)).
+            time(lessThan(4000L)).
             contentType(JSON).
             body("", hasKey("code")).
             body("code", not(empty())).
@@ -107,7 +107,7 @@ public class ApiTests {
         then().
             statusCode(200).
             log().body().
-            time(lessThan(2000L)).
+            time(lessThan(4000L)).
             contentType(JSON).
             body("", hasKey("data")).
             body("data", not(empty())).
@@ -129,7 +129,7 @@ public class ApiTests {
     public void getListOfAllNames() {
         Response response = given().filter(new AllureRestAssured()).get("/api/users?page=2");
         System.out.println(response.asString());
-        assertResponseCodeAndTime(response,200, 2000L);
+        assertResponseCodeAndTime(response,200, 4000L);
         List<String> allNames = from(response.asString()).getList("data.first_name");
         System.out.println(allNames);
         assertTrue(allNames.size() > 0, "names list is empty");
@@ -186,7 +186,7 @@ public class ApiTests {
         request.body(body);
         Response response = request.patch("/api/users/2"); // or take id from context
         response.prettyPrint();
-        assertResponseCodeAndTime(response, 200, 2000L);
+        assertResponseCodeAndTime(response, 200, 4000L);
         //String name = response.jsonPath().getString("name");
         //assertFiledIsPresentInResponseAndNotEmpty(name, "name");
         String updatedAt = response.jsonPath().getString("updatedAt");
