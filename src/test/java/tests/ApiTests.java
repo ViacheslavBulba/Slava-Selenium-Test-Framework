@@ -23,10 +23,19 @@ import org.testng.ITestContext;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
 public class ApiTests {
+
+    private String getDateAndTime() {
+        Date dateNow = new Date();
+        SimpleDateFormat formatForDateNow = new SimpleDateFormat("yyyy_MM_dd_hh_mm_ss_SSS");
+        //SimpleDateFormat formatForDateNow = new SimpleDateFormat("EEEEE, MMMMM dd, yyyy, hh-mm a zzzz");
+        return formatForDateNow.format(dateNow);
+    }
 
     @BeforeSuite
     private void setUp(ITestContext context) {
@@ -120,11 +129,6 @@ public class ApiTests {
         assertTrue(response.getTime() < time, "response took longer than " + time + " milliseconds");
     }
 
-    private void assertFiledIsPresentInResponseAndNotEmpty(String fieldValue, String fieldDescriptionForErrorMessage) {
-        assertNotNull(fieldValue, fieldDescriptionForErrorMessage + " - is missing in response");
-        assertTrue(fieldValue.length() > 0, fieldDescriptionForErrorMessage + " - is empty in response");
-    }
-
     @Test(description = "GET - getListOfAllNames")
     public void getListOfAllNames() {
         Response response = given().filter(new AllureRestAssured()).get("/api/users?page=2");
@@ -160,8 +164,9 @@ public class ApiTests {
         Response response = request.post("/api/users");
         response.prettyPrint();
         assertResponseCodeAndTime(response, 201, 5000L); // 201 Created
+        response.then().body("", hasKey("id"));
         String id = response.jsonPath().getString("id");
-        assertNotNull(id, "id - is missing in response"); // or use assertFiledIsPresentInResponseAndNotEmpty(id, "id");
+        assertNotNull(id, "id - is missing in response");
         assertTrue(id.length() > 0, "id - is empty in response");
         System.out.println("id = " + id);
         context.setAttribute("id", id);
@@ -177,7 +182,7 @@ public class ApiTests {
 
     @Test(description = "PATCH - updateUserViaPatch", dependsOnMethods = {"createUserViaPost"}) // (dependsOnMethods = {"postRequestExample"})
     public void updateUserViaPatch(ITestContext context) {
-        String newName = "patched name";
+        String newName = getDateAndTime();
         JSONObject body = new JSONObject();
         body.put("name", newName);
         System.out.println(body);
@@ -187,11 +192,12 @@ public class ApiTests {
         Response response = request.patch("/api/users/2"); // or take id from context
         response.prettyPrint();
         assertResponseCodeAndTime(response, 200, 4000L);
-        //String name = response.jsonPath().getString("name");
-        //assertFiledIsPresentInResponseAndNotEmpty(name, "name");
+        // JsonPath jsonPath = JsonPath.from(jsonString);
+        response.then().body("", hasKey("updatedAt")); // java.lang.AssertionError: 1 expectation failed. JSON path  doesn't match. Expected: map containing ["aaa"->ANYTHING]
         String updatedAt = response.jsonPath().getString("updatedAt");
-        assertFiledIsPresentInResponseAndNotEmpty(updatedAt, "updatedAt");
-        //assertEquals(name, newName, "name was not updated in response");
+        assertNotNull(updatedAt, "updatedAt - is missing in response");
+        assertTrue(updatedAt.length() > 0, "updatedAt - is empty in response");
+        // assertEquals(name, newName, "name was not updated in response");
         // also get user by id after patch
     }
 }
