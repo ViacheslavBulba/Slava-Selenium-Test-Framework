@@ -12,11 +12,25 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 
+import java.util.Random;
+
 public class BrowserTestSuite {
 
     public static ExtentReports extent;
 
     public BrowserTestSuite() {
+    }
+
+    public static String generateRandomString(int maxLength) {
+        String candidateChars = "qwertyuiopasdfghjklzxcvbnmABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        Random random = new Random();
+        StringBuilder result = new StringBuilder();
+        char randomLetter;
+        for (int i = 0; i < random.nextInt(maxLength) + 1; i++) {
+            randomLetter = candidateChars.charAt(random.nextInt(candidateChars.length()));
+            result.append(randomLetter);
+        }
+        return result.toString();
     }
 
     @BeforeSuite
