@@ -13,14 +13,14 @@ import pages.LandingPage;
 import utils.BrowserTestSuite;
 import utils.Logger;
 
-public class LandingPageTests extends BrowserTestSuite {
+public class AchieveFinancialFreedomInterview extends BrowserTestSuite {
 
     // https://lendage-interview-service.qa.lndgcp.com/user-fe.html
 
     // https://lendage-interview-service.qa.lndgcp.com/index-sdet.html
 
     @Test(description = "create user")
-    public void createUserAndCheckDataIsReturnedByGetRequest(ITestContext context) {
+    public void combinedTestUiAndApiAchieveCreateUser(ITestContext context) {
         LandingPage page = new LandingPage();
         String expectedName = generateRandomString(15);
         String expectedEmail = generateRandomString(15) + "@" + generateRandomString(7) + "." + generateRandomString(3);

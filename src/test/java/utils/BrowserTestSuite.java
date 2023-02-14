@@ -6,6 +6,7 @@ import static utils.FileSystem.clearFolder;
 
 import com.aventstack.extentreports.ExtentReports;
 import org.testng.ITestContext;
+import org.testng.ITestResult;
 import org.testng.TestException;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
@@ -57,6 +58,13 @@ public class BrowserTestSuite {
         }
         BrowserHolder.setBrowser(null);
     }
+
+//    @AfterMethod
+//    public void takeScreenshotIfFailed(ITestResult result) {
+//        if (!result.isSuccess()) {
+//            // take and save screenshot
+//        }
+//    }
 
     @AfterSuite(alwaysRun = true)
     public void recordAllDataToReport() {
