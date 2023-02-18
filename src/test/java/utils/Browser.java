@@ -11,8 +11,12 @@ import org.openqa.selenium.Platform;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.opera.OperaDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.safari.SafariDriver;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -30,6 +34,7 @@ public class Browser {
     private String url;
     private String seleniumGrid;
     private long timeout;
+    private String browser;
 
     public Browser() {
         this.setUp();
@@ -52,6 +57,7 @@ public class Browser {
 
     public void setUp() {
         this.url = FileSystem.getPropertyFromConfigFile("url");
+        this.browser = FileSystem.getPropertyFromConfigFile("browser");
         this.seleniumGrid = System.getProperty("seleniumGrid") == null
                             ? FileSystem.getPropertyFromConfigFile("seleniumGrid")
                             : System.getProperty("seleniumGrid");
@@ -83,8 +89,30 @@ public class Browser {
 //            options.addArguments("--disable-gpu"); //https://stackoverflow.com/questions/51959986/how-to-solve-selenium-chromedriver-timed-out-receiving-message-from-renderer-exc
 //            this.driver = new ChromeDriver(options);
 
-            WebDriverManager.chromedriver().setup();
-            this.driver = new ChromeDriver();
+            switch (this.browser.toLowerCase()) {
+                case "chrome":
+                    WebDriverManager.chromedriver().setup();
+                    this.driver = new ChromeDriver();
+                    break;
+                case "firefox":
+                    WebDriverManager.firefoxdriver().setup();
+                    this.driver = new FirefoxDriver();
+                    break;
+                case "edge":
+                    WebDriverManager.edgedriver().setup();
+                    this.driver = new EdgeDriver();
+                    break;
+                case "safari":
+                    WebDriverManager.safaridriver().setup();
+                    this.driver = new SafariDriver();
+                    break;
+                case "opera":
+                    WebDriverManager.operadriver().setup();
+                    this.driver = new OperaDriver();
+                    break;
+                default:
+                    throw new RuntimeException(this.browser + " browser is not supported!");
+            }
 
             this.driver.manage().timeouts().implicitlyWait(timeout, TimeUnit.SECONDS);
         } else {
