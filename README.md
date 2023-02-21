@@ -55,3 +55,18 @@ Tests retry mechanism is implemented. Retry runs only when you run your tests on
 ## Allure report
 
 allure serve allure-results
+
+## Error zsh: command not found: mvn
+
+```
+cd ~/
+code .zshrc
+```
+
+add lines and save, restart terminal
+
+```
+export M3_HOME="/Applications/IntelliJ IDEA CE.app/Contents/plugins/maven/lib/maven3"
+export M3=$M3_HOME/bin
+export PATH=$M3:$PATH
+```
