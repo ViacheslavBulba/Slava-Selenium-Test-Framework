@@ -2,17 +2,14 @@
 
 ## Description
 
-Specify start URL in config\tests.properties
-
-There you can also specify selenium grid address for the remote launch of the tests:
+Config can be found in "config/tests.properties"
 
 ```
 url = https://www.consumerreports.org/cro/a-to-z-index/products/index.htm
-;seleniumGrid = http://10.157.153.36:4444/wd/hub
+#seleniumGrid = http://10.157.153.36:4444/wd/hub
 timeout = 5
+browser = chrome
 ```
-
-You need to add/update driver versions in 'drivers' folder. For simplicity - only Chrome browser is supported for now.
 
 Test run report will be created in 'logs' folder.
 
@@ -44,7 +41,11 @@ At the root of the project there is a testng.xml, where you can specify classes 
 </suite>
 ```
 
-Tests can be run through the IDE or maven goal "test".
+Tests can be run through the IDE or maven goal "test". From the root of the project run:
+
+```
+mvn clean test
+```
 
 In IntelliJ IDEA, tests can be run via Run -> Edit Configurations menu, add 'TestNG - Suite' configuration and specify the path to the testng.xml.
 
@@ -52,9 +53,15 @@ Tests can be run in parallel. The number of threads can be adjusted in testng.xm
 
 Tests retry mechanism is implemented. Retry runs only when you run your tests on selenium grid and does not run when you run tests locally, otherwise it makes test debugging annoying.
 
-## Allure report
+## HTML report
 
+To generate and see Allure report, run from the root of the project:
+
+```
 allure serve allure-results
+```
+
+Standalone HTML report file (Extent Reports) is created in 'logs' folder (when running via maven).
 
 ## Error zsh: command not found: mvn
 
