@@ -53,16 +53,17 @@ public class BrowserTestSuite {
         BrowserHolder.setBrowserCreated(false);
     }
 
-//    @AfterMethod // uncomment to take screenshots when running via IDE from class directly
-//    public void takeScreenshotIfFailed(ITestResult result) {
-//        if (!result.isSuccess()) {
-//            String fileName = result.getName() + getDateAndTime();
-//            BrowserHolder.getBrowser().getScreenshot(fileName);
-//        }
-//    }
+    private void takeScreenshotIfFailed(ITestResult result) {
+        if (!result.isSuccess()) {
+            String fileName = result.getName() + getDateAndTime();
+            BrowserHolder.getBrowser().getScreenshot(fileName);
+        }
+    }
 
     @AfterMethod(alwaysRun = true)
-    public void browserQuit() {
+    public void browserQuit(ITestResult result) {
+        // takeScreenshotIfFailed(result); // uncomment to take screenshots when running via IDE from class directly (without listeners)
+
         // Allure.addAttachment("my attachment", "string test");
         // Allure.addAttachment("Screenshot from browserQuit", new ByteArrayInputStream(BrowserHolder.getBrowser().getScreenshotAsByteArray()));
         if (BrowserHolder.isBrowserCreated()) {
