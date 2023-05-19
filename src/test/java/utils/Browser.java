@@ -11,6 +11,7 @@ import org.openqa.selenium.Platform;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.opera.OperaDriver;
@@ -92,7 +93,10 @@ public class Browser {
             switch (this.browser.toLowerCase()) {
                 case "chrome":
                     WebDriverManager.chromedriver().setup();
-                    this.driver = new ChromeDriver();
+                    ChromeOptions chromeOptions = new ChromeOptions();
+                    //chromeOptions.setPageLoadStrategy(PageLoadStrategy.NONE);
+                    chromeOptions.addArguments("--remote-allow-origins=*");
+                    this.driver = new ChromeDriver(chromeOptions);
                     break;
                 case "firefox":
                     WebDriverManager.firefoxdriver().setup();
