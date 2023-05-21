@@ -1,40 +1,31 @@
 package utils;
 
-import static utils.FileSystem.fileSeparator;
-import static utils.FileSystem.userDir;
-
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.commons.io.FileUtils;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.Platform;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.opera.OperaDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.concurrent.TimeUnit;
+import java.time.Duration;
+
+import static utils.FileSystem.fileSeparator;
+import static utils.FileSystem.userDir;
 
 public class Browser {
 
     protected WebDriver driver;
     private String url;
     private String seleniumGrid;
-    private long timeout;
+    private Duration timeout;
     private String browser;
 
     public Browser() {
@@ -60,15 +51,15 @@ public class Browser {
         this.url = FileSystem.getPropertyFromConfigFile("url");
         this.browser = FileSystem.getPropertyFromConfigFile("browser");
         this.seleniumGrid = System.getProperty("seleniumGrid") == null
-                            ? FileSystem.getPropertyFromConfigFile("seleniumGrid")
-                            : System.getProperty("seleniumGrid");
+                ? FileSystem.getPropertyFromConfigFile("seleniumGrid")
+                : System.getProperty("seleniumGrid");
         System.out.println("seleniumGrid = " + this.seleniumGrid);
         try {
-            this.timeout = Long.parseLong(FileSystem.getPropertyFromConfigFile("timeout"));
+            this.timeout = Duration.ofSeconds(Long.parseLong(FileSystem.getPropertyFromConfigFile("timeout")));
         } catch (NumberFormatException nfe) {
             System.err.println(
-                "ERROR READING TIMEOUT VALUE FROM CONFIG\\TESTS.PROPERTIES FILE. SETTING UP DEFAULT VALUE 10 SECONDS.");
-            this.timeout = 10L;
+                    "ERROR READING TIMEOUT VALUE FROM CONFIG\\TESTS.PROPERTIES FILE. SETTING UP DEFAULT VALUE 10 SECONDS.");
+            this.timeout = Duration.ofSeconds(10L);
         }
         if (seleniumGrid == null) {
 //            if (System.getProperty("os.name").toLowerCase().contains("mac")) {
@@ -95,7 +86,13 @@ public class Browser {
                     WebDriverManager.chromedriver().setup();
                     ChromeOptions chromeOptions = new ChromeOptions();
                     //chromeOptions.setPageLoadStrategy(PageLoadStrategy.NONE);
+                    chromeOptions.addArguments("--no-sandbox");
+                    chromeOptions.addArguments("--disable-dev-shm-usage");
+                    chromeOptions.addArguments("--disable-extensions");
                     chromeOptions.addArguments("--remote-allow-origins=*");
+                    //chromeOptions.addArguments("--no-sandbox", "--disable-dev-shm-usage");
+                    //chromeOptions.addArguments("--remote-debugging-port=9222");
+                    // taskkill /im chromedriver.exe /f
                     this.driver = new ChromeDriver(chromeOptions);
                     break;
                 case "firefox":
@@ -110,15 +107,11 @@ public class Browser {
                     WebDriverManager.safaridriver().setup();
                     this.driver = new SafariDriver();
                     break;
-                case "opera":
-                    WebDriverManager.operadriver().setup();
-                    this.driver = new OperaDriver();
-                    break;
                 default:
                     throw new RuntimeException(this.browser + " browser is not supported!");
             }
+            this.driver.manage().timeouts().implicitlyWait(timeout);
 
-            this.driver.manage().timeouts().implicitlyWait(timeout, TimeUnit.SECONDS);
         } else {
             DesiredCapabilities capabilities = new DesiredCapabilities();
             capabilities.setBrowserName("chrome");
@@ -159,8 +152,8 @@ public class Browser {
                 filePath = folderString + fileSeparator + screenshotName + ".png";
             } else {
                 filePath =
-                    System.getenv("BUILD_URL") + "artifact" + fileSeparator + "screenshots" + fileSeparator
-                    + screenshotName + ".png";
+                        System.getenv("BUILD_URL") + "artifact" + fileSeparator + "screenshots" + fileSeparator
+                                + screenshotName + ".png";
             }
             return filePath;
         } catch (IOException e) {
@@ -190,8 +183,8 @@ public class Browser {
                 filePath = folderString + fileSeparator + pageSourceName + ".html";
             } else {
                 filePath =
-                    System.getenv("BUILD_URL") + "artifact" + fileSeparator + "pagesources" + fileSeparator
-                    + pageSourceName + ".html";
+                        System.getenv("BUILD_URL") + "artifact" + fileSeparator + "pagesources" + fileSeparator
+                                + pageSourceName + ".html";
             }
         } catch (IOException e) {
             Logger.fail("ERROR WHILE TAKING PAGE SOURCE: " + e.getMessage());
@@ -199,7 +192,7 @@ public class Browser {
         }
     }
 
-    public Long getTimeout() {
+    public Duration getTimeout() {
         return this.timeout;
     }
 
