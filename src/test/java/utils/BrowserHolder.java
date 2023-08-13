@@ -32,4 +32,8 @@ public class BrowserHolder {
         browserCreatedHolder.set(Boolean.valueOf(browserCreated));
     }
 
+    public static void openUrl(String url) {
+        getBrowser().getWebDriver().get(url);
+    }
+
 }

@@ -8,16 +8,23 @@ import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.response.Response;
 import org.json.JSONObject;
 import org.testng.ITestContext;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.LandingPage;
+import utils.BrowserHolder;
 import utils.BrowserTestSuite;
 import utils.Logger;
 
-public class AchieveFinancialFreedomInterview extends BrowserTestSuite {
+public class CombinedUiAndApiExample extends BrowserTestSuite {
 
     // https://lendage-interview-service.qa.lndgcp.com/user-fe.html
 
     // https://lendage-interview-service.qa.lndgcp.com/index-sdet.html
+
+    @BeforeMethod
+    public void beforeEach() {
+        BrowserHolder.openUrl("https://lendage-interview-service.qa.lndgcp.com/user-fe.html");
+    }
 
     @Test(description = "create user")
     public void combinedTestUiAndApiAchieveCreateUser(ITestContext context) {

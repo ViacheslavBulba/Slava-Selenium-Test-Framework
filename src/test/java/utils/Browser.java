@@ -30,7 +30,10 @@ public class Browser {
 
     public Browser() {
         this.setUp();
-        this.openHost();
+        this.driver.manage().window().maximize();
+        if (this.url != null) {
+            this.openUrlFromConfig();
+        }
     }
 
     public WebDriver getWebDriver() {
@@ -50,15 +53,12 @@ public class Browser {
     public void setUp() {
         this.url = FileSystem.getPropertyFromConfigFile("url");
         this.browser = FileSystem.getPropertyFromConfigFile("browser");
-        this.seleniumGrid = System.getProperty("seleniumGrid") == null
-                ? FileSystem.getPropertyFromConfigFile("seleniumGrid")
-                : System.getProperty("seleniumGrid");
-        System.out.println("seleniumGrid = " + this.seleniumGrid);
+        this.seleniumGrid = System.getProperty("seleniumGrid") == null ? FileSystem.getPropertyFromConfigFile("seleniumGrid") : System.getProperty("seleniumGrid");
+        //System.out.println("seleniumGrid = " + this.seleniumGrid);
         try {
             this.timeout = Duration.ofSeconds(Long.parseLong(FileSystem.getPropertyFromConfigFile("timeout")));
         } catch (NumberFormatException nfe) {
-            System.err.println(
-                    "ERROR READING TIMEOUT VALUE FROM CONFIG\\TESTS.PROPERTIES FILE. SETTING UP DEFAULT VALUE 10 SECONDS.");
+            System.err.println("ERROR READING TIMEOUT VALUE FROM CONFIG\\TESTS.PROPERTIES FILE. SETTING UP DEFAULT VALUE 10 SECONDS.");
             this.timeout = Duration.ofSeconds(10L);
         }
         if (seleniumGrid == null) {
@@ -125,10 +125,13 @@ public class Browser {
         }
     }
 
-    public void openHost() {
+    public void openUrlFromConfig() {
         Logger.pass("Open page " + url);
-        this.driver.manage().window().maximize();
-        this.driver.get(url);
+        try {
+            this.driver.get(url);
+        } catch (Exception | Error e) {
+            Logger.fail("ERROR OPENING URL " + url);
+        }
     }
 
     public void quit() {
@@ -151,9 +154,7 @@ public class Browser {
             if (System.getenv("BUILD_URL") == null) {
                 filePath = folderString + fileSeparator + screenshotName + ".png";
             } else {
-                filePath =
-                        System.getenv("BUILD_URL") + "artifact" + fileSeparator + "screenshots" + fileSeparator
-                                + screenshotName + ".png";
+                filePath = System.getenv("BUILD_URL") + "artifact" + fileSeparator + "screenshots" + fileSeparator + screenshotName + ".png";
             }
             return filePath;
         } catch (IOException e) {
@@ -182,9 +183,7 @@ public class Browser {
             if (System.getenv("BUILD_URL") == null) {
                 filePath = folderString + fileSeparator + pageSourceName + ".html";
             } else {
-                filePath =
-                        System.getenv("BUILD_URL") + "artifact" + fileSeparator + "pagesources" + fileSeparator
-                                + pageSourceName + ".html";
+                filePath = System.getenv("BUILD_URL") + "artifact" + fileSeparator + "pagesources" + fileSeparator + pageSourceName + ".html";
             }
         } catch (IOException e) {
             Logger.fail("ERROR WHILE TAKING PAGE SOURCE: " + e.getMessage());

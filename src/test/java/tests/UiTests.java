@@ -2,10 +2,12 @@ package tests;
 
 import static org.testng.Assert.assertTrue;
 
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pages.MenuPage;
 import pages.ProductPage;
+import utils.BrowserHolder;
 import utils.BrowserTestSuite;
 import utils.Logger;
 
@@ -13,6 +15,11 @@ import java.util.Arrays;
 import java.util.List;
 
 public class UiTests extends BrowserTestSuite {
+
+    @BeforeMethod
+    public void beforeEach() {
+        BrowserHolder.openUrl("https://www.consumerreports.org/cro/a-to-z-index/products/index.htm");
+    }
 
     @Test(description = "List of products is displayed on the menu page")
     public void checkListOfProducts() {
@@ -30,8 +37,8 @@ public class UiTests extends BrowserTestSuite {
     @DataProvider(parallel = true)
     private Object[][] productsToTest() {
         return new Object[][]{
-            {"Batteries"},
-            {"Backpack Carriers"}
+                {"Batteries"},
+                {"Backpack Carriers"}
         };
     }
 
