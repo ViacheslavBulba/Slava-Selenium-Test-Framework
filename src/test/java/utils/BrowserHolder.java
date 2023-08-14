@@ -15,7 +15,6 @@ public class BrowserHolder {
             browserHolder.set(b);
             browserCreatedHolder.set(Boolean.valueOf(true));
         }
-
         return b;
     }
 
