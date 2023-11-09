@@ -51,12 +51,11 @@ public class Browser {
     }
 
     public void setUp() {
-        this.url = FileSystem.getPropertyFromConfigFile("url");
+        this.url = FileSystem.getPropertyFromConfigFile("startUrlForAllTests");
         this.browser = FileSystem.getPropertyFromConfigFile("browser");
         this.seleniumGrid = System.getProperty("seleniumGrid") == null ? FileSystem.getPropertyFromConfigFile("seleniumGrid") : System.getProperty("seleniumGrid");
-        //System.out.println("seleniumGrid = " + this.seleniumGrid);
         try {
-            this.timeout = Duration.ofSeconds(Long.parseLong(FileSystem.getPropertyFromConfigFile("timeout")));
+            this.timeout = Duration.ofSeconds(Long.parseLong(FileSystem.getPropertyFromConfigFile("implicitWaitTimeout")));
         } catch (NumberFormatException nfe) {
             System.err.println("ERROR READING TIMEOUT VALUE FROM CONFIG\\TESTS.PROPERTIES FILE. SETTING UP DEFAULT VALUE 10 SECONDS.");
             this.timeout = Duration.ofSeconds(10L);
