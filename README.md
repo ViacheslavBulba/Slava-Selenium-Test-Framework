@@ -3,7 +3,9 @@
 ## Description
 
 First of all, for the sake of transparency - I use Java 1.8 Oracle Open JDK 1.8.0_361 to run this project.
-So unless you are forced to use Java 11 or anything other Java version > 8, please install and use JDK 1.8.0_XXX.
+
+So unless you are forced to use Java 11 or any other Java version > 8, please install and use JDK 1.8.0_XXX.
+
 Probably you can also simply set in IDE settings: File - Project Structure - Project - Language level = 8, but I did not test those configurations.
 
 Config can be found in "config/tests.properties"
