@@ -44,7 +44,7 @@ public class BrowserTestSuite {
         clearFolder("screenshots");
         clearFolder("pagesources");
         clearFolder("allure-results");
-        //ReportManager.setReportTitle(iTestContext.getSuite().getName());//you can set html report title here
+        //ReportManager.setReportTitle(iTestContext.getSuite().getName()); // you can set html report title here
         extent = ReportManager.getInstance(iTestContext.getSuite().getName());
     }
 
@@ -104,6 +104,10 @@ public class BrowserTestSuite {
         Date dateNow = new Date();
         SimpleDateFormat formatForDateNow = new SimpleDateFormat("_yyyy_MM_dd_hh_mm_ss_SSS");
         return formatForDateNow.format(dateNow);
+    }
+
+    public void openUrl(String url) {
+        BrowserHolder.openUrl(url);
     }
 
 }

@@ -16,10 +16,10 @@ import java.util.List;
 
 public class UiTests extends BrowserTestSuite {
 
-    @BeforeMethod
-    public void beforeEach() {
-        BrowserHolder.openUrl("https://www.consumerreports.org/cro/a-to-z-index/products/index.htm");
-    }
+//    @BeforeMethod // UNCOMMENT THIS METHOD IF YOU NEED TO OPEN DIFFERENT START URLS FROM DIFFERENT CLASSES WITH TESTS
+//    public void beforeEach() {
+//        openUrl("https://www.consumerreports.org/cro/a-to-z-index/products/index.htm");
+//    }
 
     @Test(description = "List of products is displayed on the menu page")
     public void checkListOfProducts() {

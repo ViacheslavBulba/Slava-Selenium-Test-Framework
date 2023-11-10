@@ -52,6 +52,9 @@ public class Browser {
 
     public void setUp() {
         this.url = FileSystem.getPropertyFromConfigFile("startUrlForAllTests");
+        if (url == null) {
+            throw new RuntimeException("Please specify startUrlForAllTests value in config/tests.properties");
+        }
         this.browser = FileSystem.getPropertyFromConfigFile("browser");
         this.seleniumGrid = System.getProperty("seleniumGrid") == null ? FileSystem.getPropertyFromConfigFile("seleniumGrid") : System.getProperty("seleniumGrid");
         try {

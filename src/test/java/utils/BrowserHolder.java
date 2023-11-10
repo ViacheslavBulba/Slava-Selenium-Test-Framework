@@ -32,6 +32,7 @@ public class BrowserHolder {
     }
 
     public static void openUrl(String url) {
+        Logger.pass("Open page " + url);
         getBrowser().getWebDriver().get(url);
     }
 
