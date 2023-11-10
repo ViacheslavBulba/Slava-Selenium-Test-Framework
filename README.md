@@ -23,9 +23,9 @@ By default, I would recommend to use FireFox. For some reasons Chrome with Selen
 
 ### Java version
 
-I use Java 1.8 Oracle Open JDK 1.8.0_361 to run this project. So unless you are forced to use Java 11 or any other Java version > 8, please install and use JDK 1.8.0_XXX. Probably you can also simply set in IDE settings: File - Project Structure - Project - Language level = 8, but I did not test those configurations.
+I use Java 1.8 Oracle Open JDK 1.8.0_361 (I need Java 8 for work) to run this project. So unless you are forced to use Java 11 or any other Java version > 8, please install and use JDK 1.8.0_XXX. Probably you can also simply set in IDE settings: File - Project Structure - Project - Language level = 8, but I did not test those configurations.
 
-## Config
+## Description
 
 Config can be found in "config/tests.properties"
 
@@ -50,6 +50,10 @@ Create your Page Object classes in - src/test/java/pages
 Create your Test scenarios classes in - src/test/java/tests
 
 `startUrlForAllTests` value in config - all tests will be started by opening this url in a browser.
+
+`src/test/java/tests/UiTests` - UI selenium tests example
+
+`src/test/java/tests/ApiTests` - API tests example
 
 ## How to run tests
 
