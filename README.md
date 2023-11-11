@@ -8,9 +8,22 @@
 - Git is installed and configured (to clone the repo)
 - You will need to have some knowledge on how to write xpath locators for web elements
 
-### macOS/Windows
+### macOS/Windows note
 
 I use macOS for development, but the framework should work in Windows as well. Code inside is written in the way to work with both OS. Initially I used Windows when I started implementing this framework, so it worked with windows back then, and it should now. It's just that I do not have Windows right now to test everything in both platforms. But please let me know if you face any issues or something does not work.
+
+### Java version note
+
+I use Java 1.8 Oracle Open JDK 1.8.0_361 (I need Java 8 for work) to run this project. So unless you are forced to use Java 11 or any other Java version > 8, please install and use JDK 1.8.0_XXX. Probably you can also simply set in IDE settings: File - Project Structure - Project - Language level = 8, but I did not test those configurations.
+
+## Description
+
+## How to start using the project
+
+1. Download the project using green button [Code] on the top right -> then select [Download ZIP]. Or you can clone the repo from GitHub but, most likely, you will need to configure SSH key to do so.
+2. Unzip the project folder to the location of your choosing on your laptop.
+3. Start your IDE (IntelliJ IDEA/Eclipse/etc.). Then in IDE go to menu File -> Open and select the folder from previous step where you downloaded and unzipped the project to. You should select the folder that has src folder and pom.xml inside it. If you select a folder at another nesting level - IDE will not properly recognise it as a project.
+4. Then you need to specify Java SDK in the IDE menu File -> Project Structure -> SDK. Select JDK that you have installed and configured on your machine.
 
 ### Supported browsers
 
@@ -21,11 +34,7 @@ I use macOS for development, but the framework should work in Windows as well. C
 
 By default, I would recommend to use FireFox. For some reasons Chrome with Selenium behaves very slow on my machine.
 
-### Java version
-
-I use Java 1.8 Oracle Open JDK 1.8.0_361 (I need Java 8 for work) to run this project. So unless you are forced to use Java 11 or any other Java version > 8, please install and use JDK 1.8.0_XXX. Probably you can also simply set in IDE settings: File - Project Structure - Project - Language level = 8, but I did not test those configurations.
-
-## Description
+### Config
 
 Config can be found in "config/tests.properties"
 
@@ -61,7 +70,7 @@ Create your Test scenarios classes in - src/test/java/tests
 
 Most likely, during local development, you will be running your tests using green "run" icon on the left of your test method names.
 This is the fastest, but the least desirable way to run tests because it does not take into account configurations from maven pom.xml or TestNG xml file (tests will be run without any listeners specified in TestNG xml file).
-And this is not the way your tests will be run on CI/CD, just keep that in mind.
+But this is not the way your tests will be run on CI/CD, just keep that in mind.
 
 ### Method 2
 
