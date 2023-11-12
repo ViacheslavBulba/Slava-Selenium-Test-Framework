@@ -1,4 +1,4 @@
-# Just another simple framework for writing and running Selenium tests (Java + Maven + TestNG + Selenium)
+# Selenium test automation framework for beginners (Java + Maven + TestNG + Selenium)
 
 ## Preconditions
 
@@ -6,24 +6,16 @@
 - Maven is installed and configured
 - IntelliJ IDEA community edition is installed or any other IDE of your choice
 - Firefox browser is installed (by default tests are running in Firefox, but you can change it in config)
-- You will need to have some knowledge on how to write xpath locators for web elements
-
-### macOS/Windows note
-
-I use macOS for development, but the framework should work in Windows as well. Code inside is written in the way to work with both OS. Initially I used Windows when I started implementing this framework, so it worked with windows back then, and it should now. It's just that I do not have Windows right now to test everything in both platforms. But please let me know if you face any issues or something does not work.
-
-### Java version note
-
-I use Java 1.8 Oracle Open JDK 1.8.0_361 (since I need Java 8 for work) to run this project. So unless you are forced to use Java 11 or any other Java version > 8, please install and use JDK 1.8.0_XXX. Probably you can also simply set in IDE settings: File - Project Structure - Project - Language level = 8, but I did not test those configurations.
+- You have some knowledge on how to write xpath locators for web elements
+- You have some basic knowledge of Java, nothing fancy, just how to create variables, what are Objects, how to call methods and pass parameters to them, create loops, things like that.
 
 ## Description
 
-## How to start using the project
+## Capabilities
 
-1. Download the project using green button [Code] on the top right -> then select [Download ZIP]. Or you can clone the repo from GitHub but, most likely, you will need to configure SSH key to do so.
-2. Unzip the project folder to the location of your choosing on your laptop.
-3. Start your IDE (IntelliJ IDEA/Eclipse/etc.). Then in IDE go to menu File -> Open and select the folder from previous step where you downloaded and unzipped the project to. You should select the folder that has src folder and pom.xml inside it. If you select a folder at another nesting level - IDE will not properly recognize it as a project.
-4. Then you need to specify Java SDK in the IDE menu File -> Project Structure -> SDK. Select JDK that you have installed and configured on your machine.
+1. Tests can be run in parallel. The number of threads can be adjusted in testng xml file, e.g.: thread-count = "2" data-provider-thread-count = "2"
+2. Tests retry mechanism is also implemented and in place. By default, retry runs only when you run your tests on selenium grid and does not run when you run tests locally, otherwise it makes test debugging annoying.
+3. Allure & Extent Reports reporting are implemented
 
 ### Supported browsers
 
@@ -33,6 +25,25 @@ I use Java 1.8 Oracle Open JDK 1.8.0_361 (since I need Java 8 for work) to run t
 4. safari
 
 By default, I would recommend to use Firefox. For some reasons, Chrome with Selenium behaves very slow on my machine.
+
+### macOS/Windows note
+
+I use macOS for development, but the framework should work in Windows as well. Code inside is written in the way to work with both OS. Initially I used Windows when I started implementing this framework, so it worked with windows back then, and it should now. It's just that I do not have Windows right now to test everything in both platforms. But please let me know if you face any issues or something does not work.
+
+### Java version note
+
+I use Java 1.8 Oracle Open JDK 1.8.0_361 (since I need Java 8 for work) to run this project. So unless you are forced to use Java 11 or any other Java version > 8, please install and use JDK 1.8.0_XXX. Probably you can also simply set in IDE settings: File - Project Structure - Project - Language level = 8, but I did not test those configurations.
+
+### Page object pattern note
+
+You can use page object pattern for writing your tests, if you want. It has everything ready for that. But I am not forcing you.
+
+## How to start using the project
+
+1. Download the project using green button [Code] on the top right -> then select [Download ZIP]. Or you can clone the repo from GitHub but, most likely, you will need to configure SSH key to do so.
+2. Unzip the project folder to the location of your choosing on your laptop.
+3. Start your IDE (IntelliJ IDEA/Eclipse/etc.). Then in IDE go to menu File -> Open and select the folder from previous step where you downloaded and unzipped the project to. You should select the folder that has src folder and pom.xml inside it. If you select a folder at another nesting level - IDE will not properly recognize it as a project.
+4. Then you need to specify Java SDK in the IDE menu File -> Project Structure -> SDK. Select JDK that you have installed and configured on your machine.
 
 ### Config
 
@@ -110,19 +121,15 @@ Most likely you are not going to use them during local development of your tests
     </listeners>
     <test name="Test class run name in xml - UI tests">
         <classes>
-            <class name="tests.UiTests" />
+            <class name="tests.UiTestsWithPageObjects" />
         </classes>
     </test>
 </suite>
 ```
 
-## Capabilities
-
-Tests can be run in parallel. The number of threads can be adjusted in testng xml file, e.g.: thread-count = "2" data-provider-thread-count = "2"
-
-Tests retry mechanism is also implemented and in place. By default, retry runs only when you run your tests on selenium grid and does not run when you run tests locally, otherwise it makes test debugging annoying.
-
 ## HTML report
+
+### Allure
 
 To generate and see Allure report, install Allure command line tools first, for example from here https://www.npmjs.com/package/allure-commandline
 
@@ -139,7 +146,9 @@ Allure report will be generated and automatically opened in your default browser
 ![](screenshot_allure_1.png)
 ![](screenshot_allure_2.png)
 
-Additional standalone HTML report file (Extent Reports) is created in 'logs' folder (when running via maven).
+### Extent Reports
+
+Additional standalone HTML report file (Extent Reports) will be created in 'logs' folder, but only if you run via maven or test ng xml, because it is built on listeners.
 
 ![](screenshot_extent_report.png)
 

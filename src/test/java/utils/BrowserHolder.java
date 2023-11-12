@@ -31,7 +31,7 @@ public class BrowserHolder {
         browserCreatedHolder.set(Boolean.valueOf(browserCreated));
     }
 
-    public static void openUrl(String url) {
+    public static void openPage(String url) {
         Logger.pass("Open page " + url);
         getBrowser().getWebDriver().get(url);
     }
