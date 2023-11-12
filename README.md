@@ -71,7 +71,7 @@ Create your Test scenarios classes in - src/test/java/tests
 
 `startUrlForAllTests` value in config - all tests will be started by opening this url in a browser.
 
-`src/test/java/tests/UiTests` - UI selenium tests example
+`src/test/java/tests/TargetExampleWithoutPageObject.java` - UI selenium tests example
 
 `src/test/java/tests/ApiTests` - API tests example
 
