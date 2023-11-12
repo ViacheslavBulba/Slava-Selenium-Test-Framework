@@ -18,4 +18,16 @@ public class TargetExampleWithoutPageObject extends BrowserTestSuite {
         page.assertNumberOfElements(productCard, 24, "product card");
         page.assertEachElementContainsText(productCard, "apple watch", "product card");
     }
+
+    @Test(description = "Upper menu on Target.com")
+    public void upperMenuOnTarget() {
+        BasePage page = new BasePage();
+        page.openPage("https://www.target.com/");
+        page.clickOnText("Pickup & Delivery");
+        page.clickOnText("Shop Order Pickup");
+        page.assertTextIsPresent("Drive Up in the app");
+        page.assertTextIsPresent("Grocery");
+        page.assertTextIsMissing("Error");
+        page.assertPageUrl("/order-pickup/");
+    }
 }

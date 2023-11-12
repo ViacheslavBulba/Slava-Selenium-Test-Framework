@@ -5,7 +5,6 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import utils.Logger;
 import utils.PageFactoryLayer;
@@ -126,6 +125,13 @@ public class BasePage extends PageFactoryLayer {
         browser.getWebDriver().findElement(By.xpath(xpath)).click();
     }
 
+    public void clickOnLink(String text) {
+        Logger.pass("Click on link [" + text + "]");
+        String xpath = "//*[contains(text(),'" + text + "')]";
+        checkIfElementPresent(xpath);
+        browser.getWebDriver().findElement(By.xpath(xpath)).click();
+    }
+
     public String getTextFromElement(String xpath) {
         checkIfElementPresent(xpath);
         return browser.getWebDriver().findElement(By.xpath(xpath)).getText();
@@ -134,6 +140,11 @@ public class BasePage extends PageFactoryLayer {
     public String getValueFromInput(String xpath) { // inputs in html does not have text in regular meaning, they have value
         checkIfElementPresent(xpath);
         return browser.getWebDriver().findElement(By.xpath(xpath)).getAttribute("value");
+    }
+
+    public void assertValueInInput(String xpath, String text, String elementNameForReport) {
+        Logger.info("Verify that text in [" + elementNameForReport + "] = [" + text + "]");
+        assertEquals(getValueFromInput(xpath), text);
     }
 
     public List<String> getTextFromElements(String xpath) {
@@ -181,9 +192,20 @@ public class BasePage extends PageFactoryLayer {
         assertEquals(getNumberOfElements(xpath), amount);
     }
 
-    public void assertTextIsPresentOnThePage(String text) {
+    public void assertTextIsPresent(String text) {
         Logger.pass("Verify that text [" + text + "] is present on the page");
         String xpath = "//*[contains(text(),'" + text + "')]";
         assertTrue(getNumberOfElements(xpath) > 0, "Text [" + text + "] is not found");
+    }
+
+    public void assertTextIsMissing(String text) {
+        Logger.pass("Verify that text [" + text + "] is missing on the page");
+        String xpath = "//*[contains(text(),'" + text + "')]";
+        assertTrue(getNumberOfElements(xpath) == 0, "Text [" + text + "] should not be displayed");
+    }
+
+    public void assertPageUrl(String urlPart) {
+        Logger.pass("Verify that page URL contains [" + urlPart + "]");
+        assertTrue(browser.getWebDriver().getCurrentUrl().toLowerCase().contains(urlPart.toLowerCase()), "Page Url does not contain [" + urlPart + "]");
     }
 }
