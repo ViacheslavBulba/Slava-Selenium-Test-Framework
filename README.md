@@ -1,4 +1,4 @@
-# Selenium test automation framework for beginners (Java + Maven + TestNG + Selenium)
+# Simple Selenium test automation framework for beginners (Java + Maven + TestNG + Selenium)
 
 ## Preconditions
 
