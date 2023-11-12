@@ -5,7 +5,7 @@
 - Java JDK is installed and configured
 - Maven is installed and configured
 - IntelliJ IDEA community edition is installed or any other IDE of your choice
-- Git is installed and configured (to clone the repo)
+- Firefox browser is installed (by default tests are running in Firefox, but you can change it in config)
 - You will need to have some knowledge on how to write xpath locators for web elements
 
 ### macOS/Windows note
@@ -14,7 +14,7 @@ I use macOS for development, but the framework should work in Windows as well. C
 
 ### Java version note
 
-I use Java 1.8 Oracle Open JDK 1.8.0_361 (I need Java 8 for work) to run this project. So unless you are forced to use Java 11 or any other Java version > 8, please install and use JDK 1.8.0_XXX. Probably you can also simply set in IDE settings: File - Project Structure - Project - Language level = 8, but I did not test those configurations.
+I use Java 1.8 Oracle Open JDK 1.8.0_361 (since I need Java 8 for work) to run this project. So unless you are forced to use Java 11 or any other Java version > 8, please install and use JDK 1.8.0_XXX. Probably you can also simply set in IDE settings: File - Project Structure - Project - Language level = 8, but I did not test those configurations.
 
 ## Description
 
@@ -22,7 +22,7 @@ I use Java 1.8 Oracle Open JDK 1.8.0_361 (I need Java 8 for work) to run this pr
 
 1. Download the project using green button [Code] on the top right -> then select [Download ZIP]. Or you can clone the repo from GitHub but, most likely, you will need to configure SSH key to do so.
 2. Unzip the project folder to the location of your choosing on your laptop.
-3. Start your IDE (IntelliJ IDEA/Eclipse/etc.). Then in IDE go to menu File -> Open and select the folder from previous step where you downloaded and unzipped the project to. You should select the folder that has src folder and pom.xml inside it. If you select a folder at another nesting level - IDE will not properly recognise it as a project.
+3. Start your IDE (IntelliJ IDEA/Eclipse/etc.). Then in IDE go to menu File -> Open and select the folder from previous step where you downloaded and unzipped the project to. You should select the folder that has src folder and pom.xml inside it. If you select a folder at another nesting level - IDE will not properly recognize it as a project.
 4. Then you need to specify Java SDK in the IDE menu File -> Project Structure -> SDK. Select JDK that you have installed and configured on your machine.
 
 ### Supported browsers
@@ -32,7 +32,7 @@ I use Java 1.8 Oracle Open JDK 1.8.0_361 (I need Java 8 for work) to run this pr
 3. edge
 4. safari
 
-By default, I would recommend to use FireFox. For some reasons Chrome with Selenium behaves very slow on my machine.
+By default, I would recommend to use Firefox. For some reasons, Chrome with Selenium behaves very slow on my machine.
 
 ### Config
 
