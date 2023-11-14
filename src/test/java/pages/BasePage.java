@@ -1,9 +1,6 @@
 package pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import utils.Logger;
@@ -36,7 +33,7 @@ public class BasePage extends PageFactoryLayer {
     }
 
     public void waitSeconds(int seconds) {
-        Logger.info("Wait " + seconds + " second(s)");
+        // Logger.info("Wait " + seconds + " second(s)");
         try {
             Thread.sleep(seconds * 1000);
         } catch (InterruptedException ignore) {
@@ -95,16 +92,30 @@ public class BasePage extends PageFactoryLayer {
     }
 
     public void scrollDownWithPause(int pixels, int times) {
+        Logger.pass("Scroll down [" + pixels + "] pixels [" + times + "] times");
         for (int i = 0; i < times; i++) {
-            scrollDown(pixels);
+            JavascriptExecutor js = (JavascriptExecutor) browser.getWebDriver();
+            js.executeScript("window.scrollBy(0, " + pixels + ");");
             waitSeconds(1);
         }
     }
 
     public void clickByCoordinates(int xCoordinate, int yCoordinate) {
+        Logger.pass("Click by coordinates [" + xCoordinate + "][" + yCoordinate + "]");
         Actions actions = new Actions(browser.getWebDriver());
         actions.moveToElement(browser.getWebDriver().findElement(By.tagName("body")), 0, 0);
         actions.moveByOffset(xCoordinate, yCoordinate).click().build().perform();
+    }
+
+    public void movePointerToElement(String xpath, String elementNameForReport) {
+        Logger.pass("Move pointer to [" + elementNameForReport + "]");
+        checkIfElementPresent(xpath);
+        WebElement element = browser.getWebDriver().findElement(By.xpath(xpath));
+        Dimension size = element.getSize();
+        int xOffset = size.getWidth() / 2;
+        int yOffset = size.getHeight() / 2;
+        Actions actions = new Actions(browser.getWebDriver());
+        actions.moveToElement(element, xOffset, yOffset).perform();
     }
 
     public void openPage(String url) {
@@ -116,6 +127,12 @@ public class BasePage extends PageFactoryLayer {
         Logger.pass("Click on [" + elementNameForReport + "]");
         checkIfElementPresent(xpath);
         browser.getWebDriver().findElement(By.xpath(xpath)).click();
+    }
+
+    public void clickOnNthFromSameElements(String xpath, int n, String elementNameForReport) {
+        Logger.pass("Click on " + n + "-nth [" + elementNameForReport + "]");
+        checkIfElementPresent(xpath);
+        browser.getWebDriver().findElements(By.xpath(xpath)).get(n - 1).click();
     }
 
     public void clickOnText(String text) {
@@ -135,6 +152,11 @@ public class BasePage extends PageFactoryLayer {
     public String getTextFromElement(String xpath) {
         checkIfElementPresent(xpath);
         return browser.getWebDriver().findElement(By.xpath(xpath)).getText();
+    }
+
+    public String getAttributeFromElement(String xpath, String attr) {
+        checkIfElementPresent(xpath);
+        return browser.getWebDriver().findElement(By.xpath(xpath)).getAttribute(attr);
     }
 
     public String getValueFromInput(String xpath) { // inputs in html does not have text in regular meaning, they have value
@@ -160,6 +182,10 @@ public class BasePage extends PageFactoryLayer {
 
     public void outputListToTerminal(List<String> list) {
         list.forEach(System.out::println);
+    }
+
+    public void outputToTerminal(String text) {
+        System.out.println(text);
     }
 
     public String generateRandomString(int maxLength) {
@@ -202,6 +228,16 @@ public class BasePage extends PageFactoryLayer {
         Logger.pass("Verify that text [" + text + "] is missing on the page");
         String xpath = "//*[contains(text(),'" + text + "')]";
         assertTrue(getNumberOfElements(xpath) == 0, "Text [" + text + "] should not be displayed");
+    }
+
+    public void assertElementIsPresent(String xpath, String elementNameForReport) {
+        Logger.pass("Verify that [" + elementNameForReport + "] is present on the page");
+        assertTrue(getNumberOfElements(xpath) > 0, "[" + elementNameForReport + "] is not found");
+    }
+
+    public void assertElementIsMissing(String xpath, String elementNameForReport) {
+        Logger.pass("Verify that [" + elementNameForReport + "] is missing on the page");
+        assertTrue(getNumberOfElements(xpath) == 0, "[" + elementNameForReport + "] should not be displayed");
     }
 
     public void assertPageUrl(String urlPart) {
