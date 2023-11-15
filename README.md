@@ -26,6 +26,16 @@
     }
 ```
 
+Test log example:
+
+```
+Open page https://www.target.com/
+Enter text [apple watch] in [search input] and press Enter
+Scroll down [1000] pixels [6] times
+Verify that number of [product card] = [24]
+Verify that each [product card] contains text [apple watch]
+```
+
 ## Capabilities
 
 1. Tests can be run in parallel. The number of threads can be adjusted in testng xml file, e.g.: thread-count = "2" data-provider-thread-count = "2"
