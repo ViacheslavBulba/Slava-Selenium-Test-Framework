@@ -2,6 +2,7 @@ package pages;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import utils.Logger;
 import utils.PageFactoryLayer;
@@ -118,9 +119,39 @@ public class BasePage extends PageFactoryLayer {
         actions.moveToElement(element, xOffset, yOffset).perform();
     }
 
+    public void movePointerToText(String text) {
+        Logger.pass("Move pointer to text [" + text + "]");
+        String xpath = "//*[contains(text(),'" + text + "')]";
+        checkIfElementPresent(xpath);
+        WebElement element = browser.getWebDriver().findElement(By.xpath(xpath));
+        Dimension size = element.getSize();
+        int xOffset = size.getWidth() / 2;
+        int yOffset = size.getHeight() / 2;
+        Actions actions = new Actions(browser.getWebDriver());
+        actions.moveToElement(element, xOffset, yOffset).perform();
+    }
+
+    public void selectOptionInDropdown(String dropdownSelectXpath, String optionText, String dropdownNameForReport) {
+        Logger.pass("Select option [" + optionText + "] in [" + dropdownNameForReport + "] dropdown");
+        Select select = new Select(browser.getWebDriver().findElement(By.xpath(dropdownSelectXpath)));
+        select.selectByVisibleText(optionText);
+    }
+
     public void openPage(String url) {
         Logger.pass("Open page " + url);
         browser.getWebDriver().get(url);
+    }
+
+    public String getPageUrl() {
+        String url = browser.getWebDriver().getCurrentUrl();
+        Logger.pass("Page url: " + url);
+        return url;
+    }
+
+    public String getPageTitle() {
+        String title = browser.getWebDriver().getTitle();
+        Logger.pass("Page title: " + title);
+        return title;
     }
 
     public void clickOnElement(String xpath, String elementNameForReport) {
@@ -171,8 +202,7 @@ public class BasePage extends PageFactoryLayer {
 
     public List<String> getTextFromElements(String xpath) {
         checkIfElementPresent(xpath);
-        List<String> texts =
-                browser.getWebDriver().findElements(By.xpath(xpath)).stream().map(WebElement::getText).collect(Collectors.toList());
+        List<String> texts = browser.getWebDriver().findElements(By.xpath(xpath)).stream().map(WebElement::getText).collect(Collectors.toList());
         for (int i = 0; i < texts.size(); i++) {
             texts.set(i, texts.get(i).replace("\n", " "));
         }
@@ -185,7 +215,7 @@ public class BasePage extends PageFactoryLayer {
     }
 
     public void outputToTerminal(String text) {
-        System.out.println(text);
+        Logger.info(text);
     }
 
     public String generateRandomString(int maxLength) {
@@ -243,5 +273,20 @@ public class BasePage extends PageFactoryLayer {
     public void assertPageUrl(String urlPart) {
         Logger.pass("Verify that page URL contains [" + urlPart + "]");
         assertTrue(browser.getWebDriver().getCurrentUrl().toLowerCase().contains(urlPart.toLowerCase()), "Page Url does not contain [" + urlPart + "]");
+    }
+
+    public void assertPageTitle(String title) {
+        Logger.pass("Verify that page title is [" + title + "]");
+        assertEquals(getPageTitle(), title, "Page title is not [" + title + "]");
+    }
+
+    public void assertElementIsSelected(String xpath, String elementNameForReport) {
+        Logger.pass("Verify that [" + elementNameForReport + "] is selected");
+        assertTrue(browser.getWebDriver().findElement(By.xpath(xpath)).isSelected(), "[" + elementNameForReport + "] is not selected");
+    }
+
+    public void assertStringsEquals(String value1, String value2) {
+        Logger.pass("Verify that [" + value1 + "] = [" + value2 + "]");
+        assertEquals(value1, value2, "[" + value1 + "] is not the same as [" + value2 + "]");
     }
 }
