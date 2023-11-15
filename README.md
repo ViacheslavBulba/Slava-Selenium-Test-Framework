@@ -9,7 +9,22 @@
 - You have some knowledge on how to write xpath locators for web elements
 - You have some basic knowledge of Java, nothing fancy, just how to create variables, what are Objects, how to call methods and pass parameters to them, create loops, things like that.
 
-## Description
+## Test Example
+
+```
+    @Test(description = "Search on Target.com")
+    public void searchOnTarget() {
+        String searchInput = "//*[@id='search']";
+        String productCard = "//*[contains(@class,'StyledTitleLink')]";
+        BasePage page = new BasePage();
+        page.openPage("https://www.target.com/");
+        page.enterTextAndPressEnter(searchInput, "apple watch", "search input");
+        page.waitSeconds(5);
+        page.scrollDownWithPause(1000, 6);
+        page.assertNumberOfElements(productCard, 24, "product card");
+        page.assertEachElementContainsText(productCard, "apple watch", "product card");
+    }
+```
 
 ## Capabilities
 
