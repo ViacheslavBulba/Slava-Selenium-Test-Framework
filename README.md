@@ -40,7 +40,7 @@ Verify that each [product card] contains text [apple watch]
 
 1. Tests can be run in parallel. The number of threads can be adjusted in testng xml file, e.g.: thread-count = "2" data-provider-thread-count = "2"
 2. Tests retry mechanism is also implemented and in place. By default, retry runs only when you run your tests on selenium grid and does not run when you run tests locally, otherwise it makes test debugging annoying.
-3. Allure & Extent Reports reporting are implemented
+3. Allure & Extent Reports reporting is implemented
 
 ### Supported browsers
 
