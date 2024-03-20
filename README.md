@@ -1,5 +1,9 @@
 # Simple Selenium test automation framework for beginners (Java + Maven + TestNG + Selenium)
 
+## Demo
+
+https://youtu.be/fN_MUe84ao0
+
 ## Preconditions
 
 - Java JDK is installed and configured
