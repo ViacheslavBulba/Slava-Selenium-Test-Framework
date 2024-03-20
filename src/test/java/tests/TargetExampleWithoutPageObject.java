@@ -24,6 +24,7 @@ public class TargetExampleWithoutPageObject extends BrowserTestSuite {
         BasePage page = new BasePage();
         page.openPage("https://www.target.com/");
         page.clickOnText("Pickup & Delivery");
+        page.waitSeconds(1);
         page.clickOnText("Shop Order Pickup");
         page.assertTextIsPresent("Drive Up in the app");
         page.assertTextIsPresent("Grocery");

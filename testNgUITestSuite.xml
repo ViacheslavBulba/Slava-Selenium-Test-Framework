@@ -7,7 +7,7 @@
     </listeners>
     <test name="Test class run name in xml - UI tests">
         <classes>
-            <class name="tests.UiTestsWithPageObjects" />
+            <class name="tests.TargetExampleWithoutPageObject" />
         </classes>
     </test>
 </suite>
