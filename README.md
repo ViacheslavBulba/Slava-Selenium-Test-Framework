@@ -106,6 +106,8 @@ Create your Test scenarios classes in - src/test/java/tests
 
 ## How to run tests
 
+Note - when you run sample tests first time right after cloning the repo - the first run might fail with unexpected error coming from FireFox driver, please try to run it again and it should go away. I see this sometimes and it is related to WebDriverManager and how it manages browser drivers when downloading them first time.
+
 ### Method 1
 
 Most likely, during local development, you will be running your tests using green "run" icon on the left of your test method names.
