@@ -13,8 +13,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.*;
 
 public class BasePage extends PageFactoryLayer {
 
@@ -257,7 +256,16 @@ public class BasePage extends PageFactoryLayer {
     public void assertTextIsMissing(String text) {
         Logger.pass("Verify that text [" + text + "] is missing on the page");
         String xpath = "//*[contains(text(),'" + text + "')]";
-        assertTrue(getNumberOfElements(xpath) == 0, "Text [" + text + "] should not be displayed");
+        boolean isDisplayed = false;
+        List<WebElement> elements = browser.getWebDriver().findElements(By.xpath(xpath));
+//        Logger.pass("Found [" + elements.size() + "] elements");
+        for (WebElement el : elements) {
+            if (el.isDisplayed()) {
+                isDisplayed = true;
+                break;
+            }
+        }
+        assertFalse(isDisplayed, "Text [" + text + "] should not be displayed");
     }
 
     public void assertElementIsPresent(String xpath, String elementNameForReport) {
